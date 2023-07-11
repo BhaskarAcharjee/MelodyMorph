@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const playButton = document.getElementById("playButton");
   const stopButton = document.getElementById("stopButton");
   const visualizationCanvas = document.getElementById("visualization");
+  const audioListButtons = document.getElementsByClassName("audio-item");
 
   let audioContext;
   let audioSource;
@@ -20,15 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Load and play the selected audio file
-  const loadAudioFile = () => {
-    const file = audioFileInput.files[0];
-    const reader = new FileReader();
+  const loadAudioFile = (audioPath) => {
+    if (audioSource) {
+      audioSource.stop();
+      audioSource.disconnect();
+    }
 
-    reader.onload = () => {
-      audioContext.decodeAudioData(reader.result, (buffer) => {
-        // Stop the currently playing audio (if any)
-        stopAudio();
+    const request = new XMLHttpRequest();
+    request.open("GET", audioPath, true);
+    request.responseType = "arraybuffer";
 
+    request.onload = () => {
+      audioContext.decodeAudioData(request.response, (buffer) => {
         // Create a new audio source and connect it to the analyzer node
         audioSource = audioContext.createBufferSource();
         audioSource.buffer = buffer;
@@ -48,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    reader.readAsArrayBuffer(file);
+    request.send();
   };
 
   // Stop the currently playing audio
@@ -110,8 +114,23 @@ document.addEventListener("DOMContentLoaded", () => {
     drawFrame();
   };
 
+  // Event listener for audio list buttons
+  for (let i = 0; i < audioListButtons.length; i++) {
+    audioListButtons[i].addEventListener("click", function () {
+      const audioPath = this.getAttribute("data-audio-path");
+      loadAudioFile(audioPath);
+    });
+  }
+
   // Event listeners for buttons
-  playButton.addEventListener("click", loadAudioFile);
+  playButton.addEventListener("click", () => {
+    const file = audioFileInput.files[0];
+    if (file) {
+      const audioPath = URL.createObjectURL(file);
+      loadAudioFile(audioPath);
+    }
+  });
+
   stopButton.addEventListener("click", stopAudio);
 
   // Initialize the audio context

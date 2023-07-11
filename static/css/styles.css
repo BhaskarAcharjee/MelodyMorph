@@ -10,8 +10,9 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
   background-color: #f1f1f1;
+  padding-bottom: 20px;
 }
 
 h1 {
@@ -114,4 +115,20 @@ canvas {
 
 .audio-info li strong {
   font-weight: bold;
+}
+
+.audio-list button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #555;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.audio-list button:hover {
+  background-color: #333;
 }
