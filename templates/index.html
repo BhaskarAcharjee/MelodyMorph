@@ -6,38 +6,48 @@
 </head>
 <body>
   <div class="container">
-    <h1>Music Visualizer</h1>
-    <input type="file" id="audioFile" accept=".mp3, .wav">
-    <div class="button-group">
-      <button id="playButton">Play</button>
-      <button id="stopButton">Stop</button>
-    </div>
-    <canvas id="visualization"></canvas>
-    <div class="audio-info">
-      <h3>Audio Information</h3>
-      <ul>
-        <li><strong>Sample Rate:</strong> <span id="sampleRate"></span> Hz</li>
-        <li><strong>Duration:</strong> <span id="duration"></span> seconds</li>
-      </ul>
-    </div>
-    <div class="visualization-modes">
-      <h3>Visualization Modes</h3>
-      <div class="mode-buttons">
-        <button class="mode-button" data-mode="waveform">Waveform</button>
-        <button class="mode-button" data-mode="spectrogram">Spectrogram</button>
-        <button class="mode-button" data-mode="frequency-bars">Frequency Bars</button>
-        <button class="mode-button" data-mode="3d-visualization">3D Visualization</button>
+    <h1>MelodyMorph - Audio Visualizer</h1>
+    <div class="panel">
+      <div class="right-section">
+        <canvas id="visualization"></canvas>
+        <div class="visualization-modes">
+          <h3>Visualization Modes</h3>
+          <div class="mode-buttons">
+            <button class="mode-button" data-mode="waveform">Waveform</button>
+            <button class="mode-button" data-mode="spectrogram">Spectrogram</button>
+            <button class="mode-button" data-mode="frequency-bars">Frequency Bars</button>
+            <button class="mode-button" data-mode="3d-visualization">3D Visualization</button>
+          </div>
+        </div>
+      </div>
+      <div class="left-section">
+        <input type="file" id="audioFile" accept=".mp3, .wav">
+        <div class="button-group">
+          <button id="playButton">Play</button>
+          <button id="stopButton">Stop</button>
+        </div>
+        <div class="audio-info">
+          <h3>Audio Information</h3>
+          <ul>
+            <li><strong>Sample Rate:</strong> <span id="sampleRate"></span> Hz</li>
+            <li><strong>Duration:</strong> <span id="duration"></span> seconds</li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="audio-list">
-      <h3>Additional Provided Music Audio</h3>
-      <ul>
-        <button class="audio-item" data-audio-path="static/uploads/sample_audio.wav">Audio 1</button>
-        <button class="audio-item" data-audio-path="static/uploads/tum_kya_mile.mp3">Audio 2</button>
-        <!-- Add more audio items as needed -->
-      </ul>
-    </div> 
-  </div>  
+  </div>
+  <div class="extended-container">
+  <div class="audio-list">
+    <h3>Additional Provided Music Audio</h3>
+    <ul>
+      <button class="audio-item" data-audio-path="static/uploads/waves.mp3">Waves</button>
+      <button class="audio-item" data-audio-path="static/uploads/sci-fi-waves.wav">Sci-fi</button>
+      <button class="audio-item" data-audio-path="static/uploads/noise.wav">Noise</button>
+      <button class="audio-item" data-audio-path="static/uploads/tum_kya_mile.mp3">Song</button>
+      <!-- Add more audio items as needed -->
+    </ul>
+  </div>
+  </div>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
