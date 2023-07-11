@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Music Visualizer</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Music Visualizer</h1>
+    <input type="file" id="audioFile" accept=".mp3, .wav">
+    <div class="button-group">
+      <button id="playButton">Play</button>
+      <button id="stopButton">Stop</button>
+    </div>
+    <canvas id="visualization"></canvas>
+  </div>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

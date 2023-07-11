@@ -1,0 +1,14 @@
+-------------------Project Folder Structure-----------------
+
+music_visualizer/
+├── app.py
+├── static/
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── main.js
+│   └── uploads/   (folder to store uploaded music files)
+└── templates/
+    └── index.html
+
+-------------------------------------------------------
