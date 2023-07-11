@@ -132,3 +132,35 @@ canvas {
 .audio-list button:hover {
   background-color: #333;
 }
+
+.visualization-modes {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.visualization-modes h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.mode-buttons {
+  margin-top: 10px;
+}
+
+.mode-button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #555;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mode-button:hover {
+  background-color: #333;
+}
