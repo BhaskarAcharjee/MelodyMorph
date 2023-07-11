@@ -13,7 +13,14 @@
       <button id="stopButton">Stop</button>
     </div>
     <canvas id="visualization"></canvas>
-  </div>
+    <div class="audio-info">
+      <h3>Audio Information</h3>
+      <ul>
+        <li><strong>Sample Rate:</strong> <span id="sampleRate"></span> Hz</li>
+        <li><strong>Duration:</strong> <span id="duration"></span> seconds</li>
+      </ul>
+    </div>
+  </div>  
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

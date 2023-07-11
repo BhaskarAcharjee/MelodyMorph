@@ -5,10 +5,19 @@ music_visualizer/
 ├── static/
 │   ├── css/
 │   │   └── styles.css
-│   ├── js/
-│   │   └── main.js
-│   └── uploads/   (folder to store uploaded music files)
-└── templates/
-    └── index.html
+│   └── js/
+│       └── main.js
+├── templates/
+│   └── index.html
+└── uploads/
+    └── audio.wav
+
+app.py: This file contains the Flask application code.
+static: This folder contains static files such as CSS and JavaScript.
+css: This folder contains the styles.css file for styling the HTML elements.
+js: This folder contains the main.js file for handling client-side JavaScript logic.
+templates: This folder contains the HTML template files.
+index.html: This file represents the main page of the web application.
+uploads: This folder is used to store the uploaded audio files. In this case, it includes the audio.wav file.
 
 -------------------------------------------------------
