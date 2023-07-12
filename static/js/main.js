@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sampleRateElement = document.getElementById("sampleRate");
   const durationElement = document.getElementById("duration");
   const audioListButtons = document.getElementsByClassName("audio-item");
+  const speedSlider = document.getElementById("speedSlider");
 
   let audioContext;
   let audioSource;
@@ -38,14 +39,17 @@ document.addEventListener("DOMContentLoaded", () => {
           audioSource.connect(analyzerNode);
           analyzerNode.connect(audioContext.destination);
 
-          // Start playing the audio
-          audioSource.start();
+          // Resume the audio context
+          audioContext.resume().then(() => {
+            // Start playing the audio
+            audioSource.start();
 
-          // Update the visualization
-          visualizeAudio();
+            // Update the visualization
+            visualizeAudio();
 
-          // Update audio information
-          updateAudioInfo();
+            // Update audio information
+            updateAudioInfo();
+          });
         });
       })
       .catch((error) => {
@@ -184,7 +188,28 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const draw3DVisualization = () => {
-      // Implementation for 3D visualization goes here
+      // // Set up the scene, camera, and renderer
+      // const scene = new THREE.Scene();
+      // const camera = new THREE.PerspectiveCamera(75, visualizationCanvas.clientWidth / visualizationCanvas.clientHeight, 0.1, 1000);
+      // const renderer = new THREE.WebGLRenderer({ antialias: true });
+      // renderer.setSize(visualizationCanvas.clientWidth, visualizationCanvas.clientHeight);
+      // renderer.setClearColor(0x000000, 1);
+      // document.body.appendChild(renderer.domElement);
+      // // Create geometry and material for visualization
+      // const geometry = new THREE.BoxGeometry(2, 2, 2);
+      // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      // const cube = new THREE.Mesh(geometry, material);
+      // scene.add(cube);
+      // // Position the camera
+      // camera.position.z = 5;
+      // // Render the scene
+      // const animate = () => {
+      //   requestAnimationFrame(animate);
+      //   cube.rotation.x += 0.01;
+      //   cube.rotation.y += 0.01;
+      //   renderer.render(scene, camera);
+      // };
+      // animate();
     };
 
     const drawFrame = () => {
@@ -231,10 +256,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (file) {
       const audioPath = URL.createObjectURL(file);
       loadAudioFile(audioPath);
+      updatePlaybackSpeed(); // Update the playback speed when starting playback
     }
   });
 
-  stopButton.addEventListener("click", stopAudio);
+  stopButton.addEventListener("click", () => {
+    stopAudio();
+    updatePlaybackSpeed(); // Update the playback speed when stopping playback
+  });
+
+  // Update Playback Speed
+  const updatePlaybackSpeed = () => {
+    if (audioSource) {
+      const speed = parseFloat(speedSlider.value);
+      audioSource.playbackRate.setValueAtTime(speed, audioContext.currentTime);
+    }
+  };
+
+  // Event listeners to slider
+  speedSlider.addEventListener("input", updatePlaybackSpeed);
 
   // Event listeners to the mode buttons
   const modeButtons = document.querySelectorAll(".mode-button");

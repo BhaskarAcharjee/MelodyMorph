@@ -97,6 +97,23 @@ input[type="file"] {
   background-color: #333;
 }
 
+.audio-controls {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.audio-controls label {
+  font-size: 16px;
+  color: #555;
+  margin-right: 10px;
+}
+
+.audio-controls input[type="range"] {
+  width: 200px;
+}
+
+
 
 canvas {
   margin-top: 50px;
