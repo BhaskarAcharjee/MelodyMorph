@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const durationElement = document.getElementById("duration");
   const audioListButtons = document.getElementsByClassName("audio-item");
   const speedSlider = document.getElementById("speedSlider");
+  const volumeSlider = document.getElementById("volumeSlider");
 
   let audioContext;
   let audioSource;
@@ -26,6 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
     analyzerNode.fftSize = 256; // Adjust the FFT size as needed
   };
 
+  // Update the volume
+  const updateVolume = () => {
+    if (audioSource) {
+      const volume = parseFloat(volumeSlider.value);
+      audioSource.gainNode.gain.value = volume;
+    }
+  };
+
   // Load and play the selected audio file
   const loadAudioFile = (audioPath) => {
     fetch(audioPath)
@@ -35,16 +44,21 @@ document.addEventListener("DOMContentLoaded", () => {
           // Stop the currently playing audio (if any)
           stopAudio();
 
-          // Create a new audio source and connect it to the analyzer node
+          // Create a new audio source, gain node, and connect them to the analyzer node
           audioSource = audioContext.createBufferSource();
           audioSource.buffer = buffer;
-          audioSource.connect(analyzerNode);
+          audioSource.gainNode = audioContext.createGain();
+          audioSource.connect(audioSource.gainNode);
+          audioSource.gainNode.connect(analyzerNode);
           analyzerNode.connect(audioContext.destination);
 
           // Resume the audio context
           audioContext.resume().then(() => {
             // Start playing the audio
             audioSource.start();
+
+              // Set the initial volume
+              updateVolume();
 
             // Update the visualization
             visualizeAudio();
@@ -274,12 +288,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
-  
 
   stopButton.addEventListener("click", () => {
     stopAudio();
     updatePlaybackSpeed(); // Update the playback speed when stopping playback
   });
+
+  // Event listener for volume slider
+  volumeSlider.addEventListener("input", updateVolume);
 
   // Update Playback Speed
   const updatePlaybackSpeed = () => {
