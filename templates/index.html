@@ -3,6 +3,7 @@
 <head>
   <title>Music Visualizer</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
   <div class="container">
@@ -23,8 +24,22 @@
       <div class="left-section">
         <input type="file" id="audioFile" accept=".mp3, .wav">
         <div class="button-group">
-          <button id="playButton">Play</button>
-          <button id="stopButton">Stop</button>
+          <button id="prevButton" class="player-button"><i class="fas fa-step-backward"></i></button>
+          <button id="playButton" class="player-button"><i class="fas fa-play"></i></button>
+          <button id="pauseButton" class="player-button"><i class="fas fa-pause"></i></button>
+          <button id="stopButton" class="player-button"><i class="fas fa-stop"></i></button>
+          <button id="nextButton" class="player-button"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="button-texts">
+          <p>Previous</p>
+          <p>Play</p>
+          <p>Pause/Resume</p>
+          <p>Stop</p>
+          <p>Next</p>
+        </div>
+        <div class="audio-controls">
+          <label for="volumeSlider">Volume:</label>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
         </div>
         <div class="audio-controls">
           <label for="speedSlider">Speed:</label>
@@ -37,7 +52,7 @@
             <li><strong>Duration:</strong> <span id="duration"></span> seconds</li>
           </ul>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
   <div class="extended-container">

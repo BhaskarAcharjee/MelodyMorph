@@ -43,6 +43,8 @@ h1 {
   color: #333;
 }
 
+/* ---------- Upload Files ----------- */
+
 input[type="file"] {
   margin-bottom: 20px;
   padding: 15px;
@@ -56,6 +58,8 @@ input[type="file"] {
   max-width: 400px;
 }
 
+/* ---------- Media Player Buttons ----------- */
+
 .button-group {
   display: flex;
   align-items: center;
@@ -63,39 +67,45 @@ input[type="file"] {
   margin-bottom: 20px;
 }
 
-.button {
-  margin: 0 20px;
-  padding: 15px 30px;
-  font-size: 20px;
+.player-button {
+  width: 56px;
+  height: 56px;
+  margin: 0 10px;
   border: none;
-  border-radius: 50px;
+  border-radius: 50%;
   background-color: #555;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.button:hover {
+.player-button:hover {
   background-color: #333;
 }
 
-#playButton,
-#stopButton {
-  margin: 0 20px;
-  padding: 15px 30px;
-  font-size: 20px;
-  border: none;
-  border-radius: 50px;
-  background-color: #555;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.player-button i {
+  font-size: 24px;
 }
 
-#playButton:hover,
-#stopButton:hover {
-  background-color: #333;
+.button-texts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  text-align: center;
 }
+
+.button-texts p {
+  margin: 0 15px; 
+  font-size: 12px;
+  color: #555;
+}
+
+/* ---------- Audio Controls ----------- */
 
 .audio-controls {
   display: flex;
@@ -113,7 +123,7 @@ input[type="file"] {
   width: 200px;
 }
 
-
+/* ---------- Visualization Panel ----------- */
 
 canvas {
   margin-top: 50px;
@@ -155,6 +165,8 @@ canvas {
 .mode-button:hover {
   background-color: #333;
 }
+
+/* ---------- Additional Audio Files ----------- */
 
 .extended-container {
   margin-top: 20px;

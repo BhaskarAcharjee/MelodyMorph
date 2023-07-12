@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const audioFileInput = document.getElementById("audioFile");
   const playButton = document.getElementById("playButton");
+  const pauseButton = document.getElementById("pauseButton");
   const stopButton = document.getElementById("stopButton");
   const visualizationCanvas = document.getElementById("visualization");
   const sampleRateElement = document.getElementById("sampleRate");
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let visualizationHeight;
   let gradient;
   let currentMode = "frequency-bars"; // Default visualization mode
+  let isPaused = false;
 
   // Initialize the audio context
   const initAudioContext = () => {
@@ -250,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     visualizeAudio();
   };
 
-  // Event listeners for play and stop buttons
+  // Event listeners for play, pause, and stop buttons
   playButton.addEventListener("click", () => {
     const file = audioFileInput.files[0];
     if (file) {
@@ -259,6 +261,20 @@ document.addEventListener("DOMContentLoaded", () => {
       updatePlaybackSpeed(); // Update the playback speed when starting playback
     }
   });
+
+  pauseButton.addEventListener("click", () => {
+    if (!isPaused) {
+      // Pause the audio
+      audioContext.suspend();
+      isPaused = true;
+    } else {
+      // Resume the audio
+      audioContext.resume().then(() => {
+        isPaused = false;
+      });
+    }
+  });
+  
 
   stopButton.addEventListener("click", () => {
     stopAudio();
