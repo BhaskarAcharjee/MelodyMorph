@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const sampleRateElement = document.getElementById("sampleRate");
   const durationElement = document.getElementById("duration");
   const audioListButtons = document.getElementsByClassName("audio-item");
+  const tabItems = document.querySelectorAll(".tab-item");
+  const audioLists = document.querySelectorAll(".audio-list");
   const speedSlider = document.getElementById("speedSlider");
   const volumeSlider = document.getElementById("volumeSlider");
 
@@ -57,8 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Start playing the audio
             audioSource.start();
 
-              // Set the initial volume
-              updateVolume();
+            // Set the initial volume
+            updateVolume();
 
             // Update the visualization
             visualizeAudio();
@@ -316,6 +318,42 @@ document.addEventListener("DOMContentLoaded", () => {
       switchVisualizationMode(mode);
     });
   });
+
+  // Event listeners for category tab items
+  tabItems.forEach((tabItem) => {
+    tabItem.addEventListener("click", () => {
+      // Remove "active" class from all tab items
+      tabItems.forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      // Add "active" class to the clicked tab item
+      tabItem.classList.add("active");
+
+      // Get the category associated with the clicked tab item
+      const category = tabItem.getAttribute("data-category");
+
+      // Show the corresponding audio list based on the category
+      showAudioList(category);
+    });
+  });
+
+  // Function to show the audio list based on the category
+  const showAudioList = (category) => {
+    // Hide all audio lists
+    audioLists.forEach((audioList) => {
+      audioList.style.display = "none";
+    });
+
+    // Show the audio list associated with the category
+    const audioList = document.getElementById(`${category}Audios`);
+    if (audioList) {
+      audioList.style.display = "block";
+    }
+  };
+
+  // Show the initial audio list (default category: songs)
+  showAudioList("songs");
 
   // Get the visualization canvas size
   visualizationWidth = visualizationCanvas.clientWidth;

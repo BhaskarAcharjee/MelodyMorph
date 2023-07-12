@@ -10,6 +10,8 @@ music_visualizer/
 ├── templates/
 │   └── index.html
 └── uploads/
+    ├── images/
+    |   └── image.jpg
     └── audio.wav
 
 app.py: This file contains the Flask application code.

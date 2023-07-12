@@ -56,17 +56,40 @@
     </div>
   </div>
   <div class="extended-container">
-  <div class="audio-list">
-    <h3>Additional Provided Music Audio</h3>
-    <ul>
-      <button class="audio-item" data-audio-path="static/uploads/waves.mp3">Waves</button>
-      <button class="audio-item" data-audio-path="static/uploads/sci-fi-waves.wav">Sci-fi</button>
-      <button class="audio-item" data-audio-path="static/uploads/noise.wav">Noise</button>
-      <button class="audio-item" data-audio-path="static/uploads/tum_kya_mile.mp3">Song</button>
-      <!-- Add more audio items as needed -->
-    </ul>
-  </div>
-  </div>
+    <div class="audio-tabs">
+      <h3>Audio Libraries</h3>
+      <ul class="tab-list">
+        <li class="tab-item active" data-category="songs">Songs</li>
+        <li class="tab-item" data-category="3dSounds">3D Sounds</li>
+        <li class="tab-item" data-category="patternWaveform">Pattern Waveform</li>
+        <li class="tab-item" data-category="randomNoise">Random Noise</li>
+      </ul>
+      <div class="audio-list-container">
+        <ul class="audio-list" id="songsAudios">
+          <li><button class="audio-item" data-audio-path="static/uploads/tum_kya_mile.mp3"><img src="static/uploads/images/test.jpg" alt="Song Audio 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/floating-in-time.mp3"><img src="static/uploads/images/test.jpg" alt="Song Audio 4"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/Free-night-sounds-for-sleep.mp3"><img src="static/uploads/images/test.jpg" alt="Song Audio 5"></button></li>
+        </ul>
+        <ul class="audio-list" id="3dSoundsAudios">
+          <li><button class="audio-item" data-audio-path="static/uploads/Morning-bird-sounds-3d-Audio.mp3"><img src="static/uploads/images/test.jpg" alt="3D Sound 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/3d-printer.mp3"><img src="static/uploads/images/test.jpg" alt="3D Sound 2"></button></li>
+        </ul>
+        <ul class="audio-list" id="patternWaveformAudios">
+          <li><button class="audio-item" data-audio-path="static/uploads/sine.wav"><img src="static/uploads/images/test.jpg" alt="Sine Wave Audio 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/square.wav"><img src="static/uploads/images/test.jpg" alt="Square Wave Audio 2"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/triangle.wav"><img src="static/uploads/images/test.jpg" alt="Triangle Wave Audio 3"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/sci-fi-waves.wav"><img src="static/uploads/images/test.jpg" alt="Random Noise 3"></button></li>  
+          <li><button class="audio-item" data-audio-path="static/uploads/sample_audio.wav"><img src="static/uploads/images/test.jpg" alt="3D Sound 3"></button></li>
+        </ul>
+        <ul class="audio-list" id="randomNoiseAudios">
+          <li><button class="audio-item" data-audio-path="static/uploads/noise.wav"><img src="static/uploads/images/test.jpg" alt="Random Noise 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/dragon-monstruo.mp3"><img src="static/uploads/images/test.jpg" alt="Random Noise 2"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/square2.wav"><img src="static/uploads/images/test.jpg" alt="Square2 Wave Audio 4"></button></li> 
+          
+        </ul>
+      </div>
+    </div>
+  </div>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
