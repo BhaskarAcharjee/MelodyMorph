@@ -356,12 +356,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // function to calculate the bit rate
   const calculateBitRate = () => {
-    return "256 kbps"; // Example value
+    const audioBuffer = audioSource.buffer;
+    const bitRate = (audioBuffer.length * 8) / audioBuffer.duration / 1000; // Calculate the bit rate in kilobits per second
+    return bitRate.toFixed(2) + " kbps";
   };
 
   // function to calculate the file size
   const calculateFileSize = () => {
-    return "5.2 MB"; // Example value
+    const audioBuffer = audioSource.buffer;
+    const fileSize = audioBuffer.length * audioBuffer.numberOfChannels * 2; // Calculate the file size in bytes
+    return formatFileSize(fileSize);
+  };
+
+  // Helper function to format file size in human-readable format
+  const formatFileSize = (bytes) => {
+    if (bytes < 1024) {
+      return bytes + " B";
+    } else if (bytes < 1048576) {
+      return (bytes / 1024).toFixed(2) + " KB";
+    } else if (bytes < 1073741824) {
+      return (bytes / 1048576).toFixed(2) + " MB";
+    } else {
+      return (bytes / 1073741824).toFixed(2) + " GB";
+    }
   };
 
   // -------------------------------- Media Control ----------------------------------
