@@ -4,13 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const pauseButton = document.getElementById("pauseButton");
   const stopButton = document.getElementById("stopButton");
   const visualizationCanvas = document.getElementById("visualization");
-  const sampleRateElement = document.getElementById("sampleRate");
   const durationElement = document.getElementById("duration");
+  const sampleRateElement = document.getElementById("sampleRate");
+  const bitRateElement = document.getElementById("bitRate");
+  const fileSizeElement = document.getElementById("fileSize");
   const audioListButtons = document.getElementsByClassName("audio-item");
   const tabItems = document.querySelectorAll(".tab-item");
   const audioLists = document.querySelectorAll(".audio-list");
   const speedSlider = document.getElementById("speedSlider");
   const volumeSlider = document.getElementById("volumeSlider");
+  const presetSelect = document.getElementById("preset-select");
+  const eqSliders = document.querySelectorAll(".eq-slider input[type='range']");
 
   let audioContext;
   let audioSource;
@@ -26,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const initAudioContext = () => {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     analyzerNode = audioContext.createAnalyser();
-    analyzerNode.fftSize = 256; // Adjust the FFT size as needed
+    analyzerNode.fftSize = 2048; // Higher FFT size for more frequency bands
   };
 
   // Update the volume
@@ -54,6 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
           audioSource.gainNode.connect(analyzerNode);
           analyzerNode.connect(audioContext.destination);
 
+          // Apply equalizer effects
+          applyEqualizerFilters();
+
           // Resume the audio context
           audioContext.resume().then(() => {
             // Start playing the audio
@@ -73,6 +80,59 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => {
         console.log("Error loading audio file:", error);
       });
+  };
+
+  // Apply equalizer filters
+  const applyEqualizerFilters = () => {
+    eqSliders.forEach((slider) => {
+      const frequency = parseFloat(slider.getAttribute("data-frequency"));
+      const gain = parseFloat(slider.value);
+
+      // Check if the frequency and gain values are valid
+      if (Number.isFinite(frequency) && Number.isFinite(gain)) {
+        const filterNode = audioContext.createBiquadFilter();
+        filterNode.type = "peaking";
+        filterNode.frequency.value = frequency;
+        filterNode.gain.value = gain;
+        filterNode.Q.value = 10; // Higher Q-factor for a more noticeable effect
+
+        // Disconnect the previous filter node (if any) and connect the new filter node
+        if (audioSource.gainNode.numberOfOutputs > 0) {
+          audioSource.gainNode.disconnect();
+        }
+        audioSource.gainNode.connect(filterNode);
+
+        // Connect the filter node to the analyzer node
+        filterNode.connect(analyzerNode);
+      }
+    });
+  };
+
+  // Apply equalizer presets
+  const applyEqualizerPresets = () => {
+    const preset = presetSelect.value;
+
+    // Define the preset values
+    const presets = {
+      normal: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      pop: [3, 2, 1, 0, 0, -1, -2, -2, -3, -3],
+      rock: [4, 3, 1, 0, -1, -1, -2, -2, -3, -4],
+      jazz: [3, 4, 4, 3, 1, 0, -1, -2, -3, -3],
+      classic: [-3, -2, -1, 0, 0, 0, 0, -1, -2, -3],
+    };
+
+    // Check if audioSource is defined and apply the equalizer filters
+    if (audioSource) {
+      eqSliders.forEach((slider, index) => {
+        slider.value = presets[preset][index];
+
+        // Trigger the 'input' event to update the equalizer filters
+        const inputEvent = new Event("input");
+        slider.dispatchEvent(inputEvent);
+      });
+
+      applyEqualizerFilters();
+    }
   };
 
   // Event listener for audio list buttons
@@ -156,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
         visualizationHeight
       );
 
-      const barWidth = (visualizationWidth / bufferLength) * 2.5;
+      const barWidth = visualizationWidth / bufferLength;
       let x = 0;
 
       for (let i = 0; i < bufferLength; i++) {
@@ -172,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
           barHeight
         );
 
-        x += barWidth + 1;
+        x += barWidth;
       }
     };
 
@@ -187,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
         visualizationHeight
       );
 
-      const barWidth = (visualizationWidth / bufferLength) * 2.5;
+      const barWidth = visualizationWidth / bufferLength;
       let x = 0;
 
       for (let i = 0; i < bufferLength; i++) {
@@ -201,18 +261,26 @@ document.addEventListener("DOMContentLoaded", () => {
           barHeight
         );
 
-        x += barWidth + 1;
+        x += barWidth;
       }
     };
 
     const draw3DVisualization = () => {
       // // Set up the scene, camera, and renderer
       // const scene = new THREE.Scene();
-      // const camera = new THREE.PerspectiveCamera(75, visualizationCanvas.clientWidth / visualizationCanvas.clientHeight, 0.1, 1000);
+      // const camera = new THREE.PerspectiveCamera(
+      //   75,
+      //   visualizationCanvas.clientWidth / visualizationCanvas.clientHeight,
+      //   0.1,
+      //   1000
+      // );
       // const renderer = new THREE.WebGLRenderer({ antialias: true });
-      // renderer.setSize(visualizationCanvas.clientWidth, visualizationCanvas.clientHeight);
+      // renderer.setSize(
+      //   visualizationCanvas.clientWidth,
+      //   visualizationCanvas.clientHeight
+      // );
       // renderer.setClearColor(0x000000, 1);
-      // document.body.appendChild(renderer.domElement);
+      // visualizationCanvas.appendChild(renderer.domElement);
       // // Create geometry and material for visualization
       // const geometry = new THREE.BoxGeometry(2, 2, 2);
       // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -253,13 +321,27 @@ document.addEventListener("DOMContentLoaded", () => {
     drawFrame();
   };
 
-  // Update the audio information
+  // Update Audio information
   const updateAudioInfo = () => {
-    const sampleRate = audioSource.buffer.sampleRate;
-    const duration = audioSource.buffer.duration.toFixed(2);
+    const sampleRate = audioSource.buffer.sampleRate + "kbps";
+    const duration = audioSource.buffer.duration.toFixed(2) + "seconds";
+    const bitRate = calculateBitRate(); 
+    const fileSize = calculateFileSize();
 
     sampleRateElement.textContent = sampleRate;
     durationElement.textContent = duration;
+    bitRateElement.textContent = bitRate;
+    fileSizeElement.textContent = fileSize;
+  };
+
+  // function to calculate the bit rate
+  const calculateBitRate = () => {
+    return "256 kbps"; // Example value
+  };
+
+  // function to calculate the file size
+  const calculateFileSize = () => {
+    return "5.2 MB"; // Example value
   };
 
   // Switch the visualization mode
@@ -267,6 +349,26 @@ document.addEventListener("DOMContentLoaded", () => {
     currentMode = mode;
     visualizeAudio();
   };
+
+  // Update Playback Speed
+  const updatePlaybackSpeed = () => {
+    if (audioSource) {
+      const speed = parseFloat(speedSlider.value);
+      audioSource.playbackRate.setValueAtTime(speed, audioContext.currentTime);
+    }
+  };
+
+  // Event listeners to slider
+  speedSlider.addEventListener("input", updatePlaybackSpeed);
+
+  // Event listeners to the mode buttons
+  const modeButtons = document.querySelectorAll(".mode-button");
+  modeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.getAttribute("data-mode");
+      switchVisualizationMode(mode);
+    });
+  });
 
   // Event listeners for play, pause, and stop buttons
   playButton.addEventListener("click", () => {
@@ -299,23 +401,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event listener for volume slider
   volumeSlider.addEventListener("input", updateVolume);
 
-  // Update Playback Speed
-  const updatePlaybackSpeed = () => {
-    if (audioSource) {
-      const speed = parseFloat(speedSlider.value);
-      audioSource.playbackRate.setValueAtTime(speed, audioContext.currentTime);
-    }
-  };
+  // Apply equalizer presets
+  applyEqualizerPresets();
 
-  // Event listeners to slider
-  speedSlider.addEventListener("input", updatePlaybackSpeed);
+  // Event listener for equalizer preset select
+  presetSelect.addEventListener("change", applyEqualizerPresets);
 
-  // Event listeners to the mode buttons
-  const modeButtons = document.querySelectorAll(".mode-button");
-  modeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const mode = button.getAttribute("data-mode");
-      switchVisualizationMode(mode);
+  // Event listeners for equalizer sliders
+  eqSliders.forEach((slider) => {
+    slider.addEventListener("input", () => {
+      applyEqualizerFilters();
     });
   });
 

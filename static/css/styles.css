@@ -166,6 +166,121 @@ canvas {
   background-color: #333;
 }
 
+/* ---------- Equalizer ----------- */
+
+.equalizer-container {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.equalizer {
+  width: 700px;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.eq-presets {
+  margin-bottom: 10px;
+}
+
+.eq-sliders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+  gap: 0px; /* Add the desired gap between the sliders */
+}
+
+.eq-slider-group {
+  display: flex;
+  flex-direction: column;
+  margin: 0 5px; /* Adjust the margin as needed */
+}
+
+.eq-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Adjust the gap between the slider label and input */
+}
+
+.eq-slider label {
+  width: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+}
+
+.eq-slider input[type="range"] {
+  height: 150px; /* Adjust the height of the sliders */
+  appearance: slider-vertical;
+  background: linear-gradient(to top, #888, #ddd);
+  width: 10px;
+}
+
+.eq-slider input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #555;
+  cursor: pointer;
+}
+
+.eq-slider input[type="range"]::-webkit-slider-thumb:hover {
+  background-color: #777;
+}
+
+.eq-slider input[type="range"]::-webkit-slider-thumb:active {
+  background-color: #999;
+}
+
+.eq-slider input[type="range"]::-moz-range-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #555;
+  cursor: pointer;
+}
+
+.eq-slider input[type="range"]::-moz-range-thumb:hover {
+  background-color: #777;
+}
+
+.eq-slider input[type="range"]::-moz-range-thumb:active {
+  background-color: #999;
+}
+
+.eq-slider input[type="range"]::-ms-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #555;
+  cursor: pointer;
+}
+
+.eq-slider input[type="range"]::-ms-thumb:hover {
+  background-color: #777;
+}
+
+.eq-slider input[type="range"]::-ms-thumb:active {
+  background-color: #999;
+}
+
 /* ---------- Audio information ----------- */
 
 .audio-info {
@@ -248,7 +363,7 @@ canvas {
   flex: 1;
 }
 
-.audio-tabs h3{
+.audio-tabs h3 {
   margin: 0;
   padding: 0;
   font-size: 20px;
