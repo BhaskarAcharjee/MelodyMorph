@@ -26,19 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentMode = "frequency-bars"; // Default visualization mode
   let isPaused = false;
 
+  // Get the visualization canvas size
+  visualizationWidth = visualizationCanvas.clientWidth;
+  visualizationHeight = visualizationCanvas.clientHeight;
+
+  // Set the visualization canvas size
+  visualizationCanvas.width = visualizationWidth;
+  visualizationCanvas.height = visualizationHeight;
+
+  // -------------------------------- Initialization & Load Audio ----------------------------------
+
   // Initialize the audio context
   const initAudioContext = () => {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     analyzerNode = audioContext.createAnalyser();
     analyzerNode.fftSize = 2048; // Higher FFT size for more frequency bands
-  };
-
-  // Update the volume
-  const updateVolume = () => {
-    if (audioSource) {
-      const volume = parseFloat(volumeSlider.value);
-      audioSource.gainNode.gain.value = volume;
-    }
   };
 
   // Load and play the selected audio file
@@ -58,22 +60,22 @@ document.addEventListener("DOMContentLoaded", () => {
           audioSource.gainNode.connect(analyzerNode);
           analyzerNode.connect(audioContext.destination);
 
-          // Apply equalizer effects
-          applyEqualizerFilters();
-
           // Resume the audio context
           audioContext.resume().then(() => {
             // Start playing the audio
             audioSource.start();
-
-            // Set the initial volume
-            updateVolume();
 
             // Update the visualization
             visualizeAudio();
 
             // Update audio information
             updateAudioInfo();
+
+            // Set the initial volume
+            updateVolume();
+
+            // Apply equalizer effects
+            applyEqualizerFilters();
           });
         });
       })
@@ -82,74 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  // Apply equalizer filters
-  const applyEqualizerFilters = () => {
-    eqSliders.forEach((slider) => {
-      const frequency = parseFloat(slider.getAttribute("data-frequency"));
-      const gain = parseFloat(slider.value);
-
-      // Check if the frequency and gain values are valid
-      if (Number.isFinite(frequency) && Number.isFinite(gain)) {
-        const filterNode = audioContext.createBiquadFilter();
-        filterNode.type = "peaking";
-        filterNode.frequency.value = frequency;
-        filterNode.gain.value = gain;
-        filterNode.Q.value = 10; // Higher Q-factor for a more noticeable effect
-
-        // Disconnect the previous filter node (if any) and connect the new filter node
-        if (audioSource.gainNode.numberOfOutputs > 0) {
-          audioSource.gainNode.disconnect();
-        }
-        audioSource.gainNode.connect(filterNode);
-
-        // Connect the filter node to the analyzer node
-        filterNode.connect(analyzerNode);
-      }
-    });
-  };
-
-  // Apply equalizer presets
-  const applyEqualizerPresets = () => {
-    const preset = presetSelect.value;
-
-    // Define the preset values
-    const presets = {
-      normal: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      pop: [3, 2, 1, 0, 0, -1, -2, -2, -3, -3],
-      rock: [4, 3, 1, 0, -1, -1, -2, -2, -3, -4],
-      jazz: [3, 4, 4, 3, 1, 0, -1, -2, -3, -3],
-      classic: [-3, -2, -1, 0, 0, 0, 0, -1, -2, -3],
-    };
-
-    // Check if audioSource is defined and apply the equalizer filters
-    if (audioSource) {
-      eqSliders.forEach((slider, index) => {
-        slider.value = presets[preset][index];
-
-        // Trigger the 'input' event to update the equalizer filters
-        const inputEvent = new Event("input");
-        slider.dispatchEvent(inputEvent);
-      });
-
-      applyEqualizerFilters();
-    }
-  };
-
-  // Event listener for audio list buttons
-  for (let i = 0; i < audioListButtons.length; i++) {
-    audioListButtons[i].addEventListener("click", function () {
-      const audioPath = this.getAttribute("data-audio-path");
-      loadAudioFile(audioPath);
-    });
-  }
-
-  // Stop the currently playing audio
-  const stopAudio = () => {
-    if (audioSource) {
-      audioSource.stop();
-      audioSource.disconnect();
-    }
-  };
+  // -------------------------------- Visualization ----------------------------------
 
   // Visualize the audio data
   const visualizeAudio = () => {
@@ -321,11 +256,96 @@ document.addEventListener("DOMContentLoaded", () => {
     drawFrame();
   };
 
+  // Switch the visualization mode
+  const switchVisualizationMode = (mode) => {
+    currentMode = mode;
+    visualizeAudio();
+  };
+
+  // Event listeners to the mode buttons
+  const modeButtons = document.querySelectorAll(".mode-button");
+  modeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.getAttribute("data-mode");
+      switchVisualizationMode(mode);
+    });
+  });
+
+  // -------------------------------- Equalizer ----------------------------------
+
+  // Apply equalizer filters
+  const applyEqualizerFilters = () => {
+    eqSliders.forEach((slider) => {
+      const frequency = parseFloat(slider.getAttribute("data-frequency"));
+      const gain = parseFloat(slider.value);
+
+      // Check if the frequency and gain values are valid
+      if (Number.isFinite(frequency) && Number.isFinite(gain)) {
+        const filterNode = audioContext.createBiquadFilter();
+        filterNode.type = "peaking";
+        filterNode.frequency.value = frequency;
+        filterNode.gain.value = gain;
+        filterNode.Q.value = 10; // Higher Q-factor for a more noticeable effect
+
+        // Disconnect the previous filter node (if any) and connect the new filter node
+        if (audioSource.gainNode.numberOfOutputs > 0) {
+          audioSource.gainNode.disconnect();
+        }
+        audioSource.gainNode.connect(filterNode);
+
+        // Connect the filter node to the analyzer node
+        filterNode.connect(analyzerNode);
+      }
+    });
+  };
+
+  // Apply equalizer presets
+  const applyEqualizerPresets = () => {
+    const preset = presetSelect.value;
+
+    // Define the preset values
+    const presets = {
+      normal: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      pop: [3, 2, 1, 0, 0, -1, -2, -2, -3, -3],
+      rock: [4, 3, 1, 0, -1, -1, -2, -2, -3, -4],
+      jazz: [3, 4, 4, 3, 1, 0, -1, -2, -3, -3],
+      classic: [-3, -2, -1, 0, 0, 0, 0, -1, -2, -3],
+    };
+
+    // Check if audioSource is defined and apply the equalizer filters
+    if (audioSource) {
+      eqSliders.forEach((slider, index) => {
+        slider.value = presets[preset][index];
+
+        // Trigger the 'input' event to update the equalizer filters
+        const inputEvent = new Event("input");
+        slider.dispatchEvent(inputEvent);
+      });
+
+      applyEqualizerFilters();
+    }
+  };
+
+  // Apply equalizer presets
+  applyEqualizerPresets();
+
+  // Event listener for equalizer preset select
+  presetSelect.addEventListener("change", applyEqualizerPresets);
+
+  // Event listeners for equalizer sliders
+  eqSliders.forEach((slider) => {
+    slider.addEventListener("input", () => {
+      applyEqualizerFilters();
+    });
+  });
+
+  // -------------------------------- Audio information ----------------------------------
+
   // Update Audio information
   const updateAudioInfo = () => {
     const sampleRate = audioSource.buffer.sampleRate + "kbps";
     const duration = audioSource.buffer.duration.toFixed(2) + "seconds";
-    const bitRate = calculateBitRate(); 
+    const bitRate = calculateBitRate();
     const fileSize = calculateFileSize();
 
     sampleRateElement.textContent = sampleRate;
@@ -344,31 +364,15 @@ document.addEventListener("DOMContentLoaded", () => {
     return "5.2 MB"; // Example value
   };
 
-  // Switch the visualization mode
-  const switchVisualizationMode = (mode) => {
-    currentMode = mode;
-    visualizeAudio();
-  };
+  // -------------------------------- Media Control ----------------------------------
 
-  // Update Playback Speed
-  const updatePlaybackSpeed = () => {
+  // Stop the currently playing audio
+  const stopAudio = () => {
     if (audioSource) {
-      const speed = parseFloat(speedSlider.value);
-      audioSource.playbackRate.setValueAtTime(speed, audioContext.currentTime);
+      audioSource.stop();
+      audioSource.disconnect();
     }
   };
-
-  // Event listeners to slider
-  speedSlider.addEventListener("input", updatePlaybackSpeed);
-
-  // Event listeners to the mode buttons
-  const modeButtons = document.querySelectorAll(".mode-button");
-  modeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const mode = button.getAttribute("data-mode");
-      switchVisualizationMode(mode);
-    });
-  });
 
   // Event listeners for play, pause, and stop buttons
   playButton.addEventListener("click", () => {
@@ -398,21 +402,29 @@ document.addEventListener("DOMContentLoaded", () => {
     updatePlaybackSpeed(); // Update the playback speed when stopping playback
   });
 
+  // Update the volume
+  const updateVolume = () => {
+    if (audioSource) {
+      const volume = parseFloat(volumeSlider.value);
+      audioSource.gainNode.gain.value = volume;
+    }
+  };
+
   // Event listener for volume slider
   volumeSlider.addEventListener("input", updateVolume);
 
-  // Apply equalizer presets
-  applyEqualizerPresets();
+  // Update Playback Speed
+  const updatePlaybackSpeed = () => {
+    if (audioSource) {
+      const speed = parseFloat(speedSlider.value);
+      audioSource.playbackRate.setValueAtTime(speed, audioContext.currentTime);
+    }
+  };
 
-  // Event listener for equalizer preset select
-  presetSelect.addEventListener("change", applyEqualizerPresets);
+  // Event listeners to playback speed slider
+  speedSlider.addEventListener("input", updatePlaybackSpeed);
 
-  // Event listeners for equalizer sliders
-  eqSliders.forEach((slider) => {
-    slider.addEventListener("input", () => {
-      applyEqualizerFilters();
-    });
-  });
+  // -------------------------------- Audio Libraries ----------------------------------
 
   // Event listeners for category tab items
   tabItems.forEach((tabItem) => {
@@ -450,13 +462,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Show the initial audio list (default category: songs)
   showAudioList("songs");
 
-  // Get the visualization canvas size
-  visualizationWidth = visualizationCanvas.clientWidth;
-  visualizationHeight = visualizationCanvas.clientHeight;
+  // Event listener for audio list buttons
+  for (let i = 0; i < audioListButtons.length; i++) {
+    audioListButtons[i].addEventListener("click", function () {
+      const audioPath = this.getAttribute("data-audio-path");
+      loadAudioFile(audioPath);
+    });
+  }
 
-  // Set the visualization canvas size
-  visualizationCanvas.width = visualizationWidth;
-  visualizationCanvas.height = visualizationHeight;
+  // -------------------------------- End ----------------------------------
 
   // Initialize the audio context
   initAudioContext();
