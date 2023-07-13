@@ -195,7 +195,7 @@ canvas {
   border-radius: 5px;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -211,6 +211,7 @@ canvas {
 }
 
 .eq-presets {
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -421,4 +422,27 @@ canvas {
 
 .audio-item:focus img {
   box-shadow: 0 0 0 2px #555;
+}
+
+/* -------------- Seek Bar and Time Display -------------- */
+
+.seek-bar-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#seekBar {
+  width: 600px;
+}
+
+.seek-bar-time {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+#currentTime,
+#totalTime {
+  font-weight: bold;
 }

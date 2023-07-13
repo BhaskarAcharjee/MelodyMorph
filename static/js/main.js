@@ -63,6 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
           // Stop the currently playing audio (if any)
           stopAudio();
 
+          // Clear the 3D visualization canvas
+          clear3DVisualizationCanvas();
+
           // Create a new audio source, gain node, and connect them to the analyzer node
           audioSource = audioContext.createBufferSource();
           audioSource.buffer = buffer;
@@ -297,6 +300,18 @@ document.addEventListener("DOMContentLoaded", () => {
   mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
+  // Function to stop the 3D visualization
+  const stop3DVisualization = () => {
+    is3DVisualizationActive = false;
+    // clear3DVisualizationCanvas();
+  };
+
+  // Function to clear the 3D visualization canvas
+  const clear3DVisualizationCanvas = () => {
+    is3DVisualizationActive = false;
+    renderer.clear();
+  };
+
   // -------------------------------- Equalizer ----------------------------------
 
   // Apply equalizer filters
@@ -369,8 +384,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update Audio information
   const updateAudioInfo = () => {
-    const sampleRate = audioSource.buffer.sampleRate + "kbps";
-    const duration = audioSource.buffer.duration.toFixed(2) + "seconds";
+    const sampleRate = audioSource.buffer.sampleRate + " kbps";
+    const duration = audioSource.buffer.duration.toFixed(2) + " seconds";
     const bitRate = calculateBitRate();
     const fileSize = calculateFileSize();
 
@@ -432,10 +447,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // Pause the audio
       audioContext.suspend();
       isPaused = true;
+      if (currentMode === "3d-visualization") {
+        stop3DVisualization(); // Stop the 3D visualization when pausing
+      }
     } else {
       // Resume the audio
       audioContext.resume().then(() => {
         isPaused = false;
+        if (currentMode === "3d-visualization") {
+          visualizeAudio(); // Resume the 3D visualization when resuming audio
+        }
       });
     }
   });
@@ -443,6 +464,9 @@ document.addEventListener("DOMContentLoaded", () => {
   stopButton.addEventListener("click", () => {
     stopAudio();
     updatePlaybackSpeed(); // Update the playback speed when stopping playback
+    if (currentMode === "3d-visualization") {
+      clear3DVisualizationCanvas(); // Stop the 3D visualization when stopping
+    }
   });
 
   // Update the volume
