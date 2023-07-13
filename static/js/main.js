@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pauseButton = document.getElementById("pauseButton");
   const stopButton = document.getElementById("stopButton");
   const visualizationCanvas = document.getElementById("visualization");
+  const visualization3DCanvas = document.getElementById("visualization3D");
   const durationElement = document.getElementById("duration");
   const sampleRateElement = document.getElementById("sampleRate");
   const bitRateElement = document.getElementById("bitRate");
@@ -25,6 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let gradient;
   let currentMode = "frequency-bars"; // Default visualization mode
   let isPaused = false;
+
+  // Define variables for 3D visualization
+  let renderer;
+  let scene;
+  let camera;
+  let mesh;
+  let geometry;
+  let material;
+  let rotationSpeed = 0.001;
+  let is3DVisualizationActive = false; // Variable to track if 3D visualization is active
 
   // Get the visualization canvas size
   visualizationWidth = visualizationCanvas.clientWidth;
@@ -200,55 +211,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    const draw3DVisualization = () => {
-      // // Set up the scene, camera, and renderer
-      // const scene = new THREE.Scene();
-      // const camera = new THREE.PerspectiveCamera(
-      //   75,
-      //   visualizationCanvas.clientWidth / visualizationCanvas.clientHeight,
-      //   0.1,
-      //   1000
-      // );
-      // const renderer = new THREE.WebGLRenderer({ antialias: true });
-      // renderer.setSize(
-      //   visualizationCanvas.clientWidth,
-      //   visualizationCanvas.clientHeight
-      // );
-      // renderer.setClearColor(0x000000, 1);
-      // visualizationCanvas.appendChild(renderer.domElement);
-      // // Create geometry and material for visualization
-      // const geometry = new THREE.BoxGeometry(2, 2, 2);
-      // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-      // const cube = new THREE.Mesh(geometry, material);
-      // scene.add(cube);
-      // // Position the camera
-      // camera.position.z = 5;
-      // // Render the scene
-      // const animate = () => {
-      //   requestAnimationFrame(animate);
-      //   cube.rotation.x += 0.01;
-      //   cube.rotation.y += 0.01;
-      //   renderer.render(scene, camera);
-      // };
-      // animate();
+    // Render the 3D visualization
+    const render3DVisualization = () => {
+      if (!is3DVisualizationActive) return; // Stop rendering if 3D visualization is not active
+      requestAnimationFrame(render3DVisualization);
+      mesh.rotation.x += rotationSpeed;
+      mesh.rotation.y += rotationSpeed;
+      renderer.render(scene, camera);
     };
 
     const drawFrame = () => {
       switch (currentMode) {
         case "waveform":
           drawWaveform();
+          is3DVisualizationActive = false;
           break;
         case "spectrogram":
           drawSpectrogram();
+          is3DVisualizationActive = false;
           break;
         case "frequency-bars":
           drawFrequencyBars();
+          is3DVisualizationActive = false;
           break;
         case "3d-visualization":
-          draw3DVisualization();
+          is3DVisualizationActive = true;
+          render3DVisualization();
           break;
         default:
           drawWaveform();
+          is3DVisualizationActive = false;
           break;
       }
     };
@@ -260,6 +252,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const switchVisualizationMode = (mode) => {
     currentMode = mode;
     visualizeAudio();
+
+    // Check if 3D visualization mode is selected
+    if (mode === "3d-visualization") {
+      // Show the 3D visualization canvas
+      visualizationCanvas.style.display = "none";
+      visualization3DCanvas.style.display = "block";
+    } else {
+      // Show the main visualization canvas and hide the 3D visualization canvas
+      visualizationCanvas.style.display = "block";
+      visualization3DCanvas.style.display = "none";
+    }
   };
 
   // Event listeners to the mode buttons
@@ -270,6 +273,29 @@ document.addEventListener("DOMContentLoaded", () => {
       switchVisualizationMode(mode);
     });
   });
+
+  // ------------------ 3D Visualization ---------------------
+
+  // Get the 3D visualization canvas and set its size
+  visualization3DCanvas.width = visualizationWidth;
+  visualization3DCanvas.height = visualizationHeight;
+
+  // Initialize the three.js renderer, scene, and camera
+  renderer = new THREE.WebGLRenderer({ canvas: visualization3DCanvas });
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(
+    75,
+    visualizationWidth / visualizationHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = 10;
+
+  // Create a basic mesh for the 3D visualization
+  geometry = new THREE.BoxGeometry(5, 5, 5);
+  material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
 
   // -------------------------------- Equalizer ----------------------------------
 

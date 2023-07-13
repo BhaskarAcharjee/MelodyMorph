@@ -43,6 +43,27 @@ h1 {
   color: #333;
 }
 
+/* ---------- Canvas ----------- */
+
+/* .canvas-container {
+  position: relative;
+}*/
+
+#visualization,
+#visualization3D {
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+} 
+
+#visualization3D {
+  display: none; /* Initially hide the 3D visualization canvas */
+}
+
+
+
 /* ---------- Upload Files ----------- */
 
 input[type="file"] {
