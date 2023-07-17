@@ -1,4 +1,5 @@
-// -------------------------------- main.js ----------------------------------
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% main.js %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 const {
   visualizeAudio,
   stop3DVisualization,
@@ -159,9 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const presets = {
       normal: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       pop: [3, 2, 1, 0, 0, -1, -2, -2, -3, -3],
+      classic: [-3, -2, -1, 0, 0, 0, 0, -1, -2, -3],
       rock: [4, 3, 1, 0, -1, -1, -2, -2, -3, -4],
       jazz: [3, 4, 4, 3, 1, 0, -1, -2, -3, -3],
-      classic: [-3, -2, -1, 0, 0, 0, 0, -1, -2, -3],
     };
 
     // Check if audioSource is defined and apply the equalizer filters

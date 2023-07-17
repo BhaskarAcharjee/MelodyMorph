@@ -15,10 +15,10 @@ def index():
 def upload():
     audio_file = request.files['audio']
     # Save the uploaded file to the uploads folder
-    audio_file.save('uploads/audio.wav')
+    audio_file.save('uploads/audios/audio.wav')
 
     # Process the uploaded audio file
-    y, sr = librosa.load('uploads/audio.wav')
+    y, sr = librosa.load('uploads/audios/audio.wav')
 
     # Extract audio features
     chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
