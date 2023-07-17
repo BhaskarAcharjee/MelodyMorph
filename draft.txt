@@ -29,3 +29,5 @@ Sample rate refers to the number of samples of audio captured per second, typica
 
 Bit Rate:
 Bit rate refers to the number of bits processed or transmitted per unit of time, typically measured in kilobits per second (kbps) or megabits per second (Mbps). In the context of audio, it represents the amount of data used to encode one second of audio. A higher bit rate generally indicates better audio quality, as more data is allocated to represent the audio signal accurately. It is commonly associated with compressed audio formats like MP3, AAC, or OGG. Bit rate can vary depending on the encoding settings and desired trade-offs between audio quality and file size. Higher bit rates result in larger file sizes.
+
+---------------------------------------------------------

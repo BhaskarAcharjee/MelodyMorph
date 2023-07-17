@@ -1,0 +1,12 @@
+{
+  "name": "music-visualizer",
+  "version": "1.0.0",
+  "scripts": {
+    "bundle": "browserify static/js/main.js -o static/js/bundle.js",
+    "watch": "watchify static/js/main.js -o static/js/bundle.js"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "watchify": "^4.0.0"
+  }
+}

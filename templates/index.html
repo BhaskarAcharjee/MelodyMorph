@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Music Visualizer</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
+
 <body>
   <!-- ----------------------------- Main Container ----------------------------- -->
   <div class="container">
@@ -14,8 +16,8 @@
       <div class="right-section">
         <canvas id="visualization"></canvas>
         <canvas id="visualization3D"></canvas>
-         <!-- ----------------------------- Seek Bar and Time Display ----------------------------- -->
-         <div class="seek-bar-container">
+        <!-- ----------------------------- Seek Bar and Time Display ----------------------------- -->
+        <div class="seek-bar-container">
           <input type="range" id="seekBar" min="0" max="100" value="0">
           <div class="seek-bar-time">
             <span id="currentTime">00:00</span> / <span id="totalTime">00:00</span>
@@ -27,6 +29,7 @@
             <button class="mode-button" data-mode="waveform">Waveform</button>
             <button class="mode-button" data-mode="spectrogram">Spectrogram</button>
             <button class="mode-button" data-mode="frequency-bars">Frequency Bars</button>
+            <button class="mode-button" data-mode="circular-visualization">Circular Visualization</button>
             <button class="mode-button" data-mode="3d-visualization">3D Visualization</button>
           </div>
           <div class="equalizer-container">
@@ -45,51 +48,62 @@
               <div class="eq-sliders">
                 <div class="eq-slider">
                   <label for="preamp-slider">Preamp:</label>
-                  <input type="range" id="preamp-slider" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="preamp">
+                  <input type="range" id="preamp-slider" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="preamp">
                 </div>
                 <div class="eq-slider">
                   <label for="slider32">32</label>
-                  <input type="range" id="slider32" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="32">
+                  <input type="range" id="slider32" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="32">
                 </div>
                 <div class="eq-slider">
                   <label for="slider64">64</label>
-                  <input type="range" id="slider64" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="64">
+                  <input type="range" id="slider64" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="64">
                 </div>
                 <div class="eq-slider">
                   <label for="slider125">125</label>
-                  <input type="range" id="slider125" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="125">
+                  <input type="range" id="slider125" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="125">
                 </div>
                 <div class="eq-slider">
                   <label for="slider250">250</label>
-                  <input type="range" id="slider250" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="250">
+                  <input type="range" id="slider250" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="250">
                 </div>
                 <div class="eq-slider">
                   <label for="slider500">500</label>
-                  <input type="range" id="slider500" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="500">
+                  <input type="range" id="slider500" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="500">
                 </div>
                 <div class="eq-slider">
                   <label for="slider1k">1k</label>
-                  <input type="range" id="slider1k" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="1000">
+                  <input type="range" id="slider1k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="1000">
                 </div>
                 <div class="eq-slider">
                   <label for="slider2k">2k</label>
-                  <input type="range" id="slider2k" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="2000">
+                  <input type="range" id="slider2k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="2000">
                 </div>
                 <div class="eq-slider">
                   <label for="slider4k">4k</label>
-                  <input type="range" id="slider4k" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="4000">
+                  <input type="range" id="slider4k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="4000">
                 </div>
                 <div class="eq-slider">
                   <label for="slider8k">8k</label>
-                  <input type="range" id="slider8k" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="8000">
+                  <input type="range" id="slider8k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="8000">
                 </div>
                 <div class="eq-slider">
                   <label for="slider16k">16k</label>
-                  <input type="range" id="slider16k" min="-12" max="12" value="0" step="0.5" class="eq-slider" data-frequency="16000">
+                  <input type="range" id="slider16k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                    data-frequency="16000">
                 </div>
               </div>
             </div>
-          </div>          
+          </div>
         </div>
       </div>
       <!-- ----------------------------- Left Section ----------------------------- -->
@@ -126,8 +140,8 @@
             <li><strong>Bit Rate:</strong> <span id="bitRate"></span> </li>
             <li><strong>File Size:</strong> <span id="fileSize"></span> </li>
           </ul>
-        </div>        
-      </div>      
+        </div>
+      </div>
     </div>
   </div>
   <!-- ----------------------------- Extended Container ----------------------------- -->
@@ -142,30 +156,44 @@
       </ul>
       <div class="audio-list-container">
         <ul class="audio-list" id="songsAudios">
-          <li><button class="audio-item" data-audio-path="static/uploads/tum_kya_mile.mp3"><img src="static/uploads/images/test.jpg" alt="Song Audio 1"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/floating-in-time.mp3"><img src="static/uploads/images/test.jpg" alt="Song Audio 4"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/Free-night-sounds-for-sleep.mp3"><img src="static/uploads/images/test.jpg" alt="Song Audio 5"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/tum_kya_mile.mp3"><img
+                src="static/uploads/images/test.jpg" alt="Song Audio 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/floating-in-time.mp3"><img
+                src="static/uploads/images/test.jpg" alt="Song Audio 4"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/Free-night-sounds-for-sleep.mp3"><img
+                src="static/uploads/images/test.jpg" alt="Song Audio 5"></button></li>
         </ul>
         <ul class="audio-list" id="3dSoundsAudios">
-          <li><button class="audio-item" data-audio-path="static/uploads/Morning-bird-sounds-3d-Audio.mp3"><img src="static/uploads/images/test.jpg" alt="3D Sound 1"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/3d-printer.mp3"><img src="static/uploads/images/test.jpg" alt="3D Sound 2"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/Morning-bird-sounds-3d-Audio.mp3"><img
+                src="static/uploads/images/test.jpg" alt="3D Sound 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/3d-printer.mp3"><img
+                src="static/uploads/images/test.jpg" alt="3D Sound 2"></button></li>
         </ul>
         <ul class="audio-list" id="patternWaveformAudios">
-          <li><button class="audio-item" data-audio-path="static/uploads/sine.wav"><img src="static/uploads/images/test.jpg" alt="Sine Wave Audio 1"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/square.wav"><img src="static/uploads/images/test.jpg" alt="Square Wave Audio 2"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/triangle.wav"><img src="static/uploads/images/test.jpg" alt="Triangle Wave Audio 3"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/sci-fi-waves.wav"><img src="static/uploads/images/test.jpg" alt="Random Noise 3"></button></li>  
-          <li><button class="audio-item" data-audio-path="static/uploads/sample_audio.wav"><img src="static/uploads/images/test.jpg" alt="3D Sound 3"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/sine.wav"><img
+                src="static/uploads/images/test.jpg" alt="Sine Wave Audio 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/square.wav"><img
+                src="static/uploads/images/test.jpg" alt="Square Wave Audio 2"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/triangle.wav"><img
+                src="static/uploads/images/test.jpg" alt="Triangle Wave Audio 3"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/sci-fi-waves.wav"><img
+                src="static/uploads/images/test.jpg" alt="Random Noise 3"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/sample_audio.wav"><img
+                src="static/uploads/images/test.jpg" alt="3D Sound 3"></button></li>
         </ul>
         <ul class="audio-list" id="randomNoiseAudios">
-          <li><button class="audio-item" data-audio-path="static/uploads/noise.wav"><img src="static/uploads/images/test.jpg" alt="Random Noise 1"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/dragon-monstruo.mp3"><img src="static/uploads/images/test.jpg" alt="Random Noise 2"></button></li>
-          <li><button class="audio-item" data-audio-path="static/uploads/square2.wav"><img src="static/uploads/images/test.jpg" alt="Square2 Wave Audio 4"></button></li> 
+          <li><button class="audio-item" data-audio-path="static/uploads/noise.wav"><img
+                src="static/uploads/images/test.jpg" alt="Random Noise 1"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/dragon-monstruo.mp3"><img
+                src="static/uploads/images/test.jpg" alt="Random Noise 2"></button></li>
+          <li><button class="audio-item" data-audio-path="static/uploads/square2.wav"><img
+                src="static/uploads/images/test.jpg" alt="Square2 Wave Audio 4"></button></li>
         </ul>
       </div>
     </div>
-  </div>  
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bundle.js') }}"></script> <!-- Bundle Script -->
 </body>
+
 </html>
