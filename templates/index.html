@@ -23,6 +23,122 @@
             <span id="currentTime">00:00</span> / <span id="totalTime">00:00</span>
           </div>
         </div>
+        <!-- ----------------------------- Equalizer ----------------------------- -->
+        <div class="equalizer-container">
+          <h3>Equalizer</h3>
+          <div class="equalizer">
+            <div class="eq-presets">
+              <label for="preset-select">Presets:</label>
+              <select id="preset-select">
+                <option value="normal">Normal</option>
+                <option value="pop">Pop</option>
+                <option value="classic">Classic</option>
+                <option value="rock">Rock</option>
+                <option value="jazz">Jazz</option>
+              </select>
+            </div>
+            <div class="eq-sliders">
+              <div class="eq-slider">
+                <label for="preamp-slider">Preamp:</label>
+                <input type="range" id="preamp-slider" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="preamp">
+              </div>
+              <div class="eq-slider">
+                <label for="slider32">32</label>
+                <input type="range" id="slider32" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="32">
+              </div>
+              <div class="eq-slider">
+                <label for="slider64">64</label>
+                <input type="range" id="slider64" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="64">
+              </div>
+              <div class="eq-slider">
+                <label for="slider125">125</label>
+                <input type="range" id="slider125" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="125">
+              </div>
+              <div class="eq-slider">
+                <label for="slider250">250</label>
+                <input type="range" id="slider250" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="250">
+              </div>
+              <div class="eq-slider">
+                <label for="slider500">500</label>
+                <input type="range" id="slider500" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="500">
+              </div>
+              <div class="eq-slider">
+                <label for="slider1k">1k</label>
+                <input type="range" id="slider1k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="1000">
+              </div>
+              <div class="eq-slider">
+                <label for="slider2k">2k</label>
+                <input type="range" id="slider2k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="2000">
+              </div>
+              <div class="eq-slider">
+                <label for="slider4k">4k</label>
+                <input type="range" id="slider4k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="4000">
+              </div>
+              <div class="eq-slider">
+                <label for="slider8k">8k</label>
+                <input type="range" id="slider8k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="8000">
+              </div>
+              <div class="eq-slider">
+                <label for="slider16k">16k</label>
+                <input type="range" id="slider16k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
+                  data-frequency="16000">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ----------------------------- Left Section ----------------------------- -->
+      <div class="left-section">
+        <input type="file" id="audioFile" accept=".mp3, .wav">
+        <div class="left-section-top">
+          <!----------------------------- Media Controls ----------------------------->
+          <div class="media-controls">
+            <div class="button-group">
+              <button id="prevButton" class="player-button"><i class="fas fa-step-backward"></i></button>
+              <button id="playButton" class="player-button"><i class="fas fa-play"></i></button>
+              <button id="pauseButton" class="player-button"><i class="fas fa-pause"></i></button>
+              <button id="stopButton" class="player-button"><i class="fas fa-stop"></i></button>
+              <button id="nextButton" class="player-button"><i class="fas fa-step-forward"></i></button>
+            </div>
+            <div class="button-texts">
+              <p>Previous</p>
+              <p>Play</p>
+              <p>Pause/Resume</p>
+              <p>Stop</p>
+              <p>Next</p>
+            </div>
+            <div class="audio-controls">
+              <label for="volumeSlider">Volume:</label>
+              <input type="range" id="volumeSlider" min="0" max="2" step="0.1" value="1">
+            </div>
+            <div class="audio-controls">
+              <label for="speedSlider">Speed:</label>
+              <input type="range" id="speedSlider" min="0.25" max="16" step="0.1" value="1">
+            </div>
+          </div>
+          <!-- ----------------------------- Audio Information ----------------------------- -->
+          <div class="audio-info">
+            <h3>Audio Information</h3>
+            <ul>
+              <li><strong>Duration:</strong> <span id="duration"></span> </li>
+              <li><strong>Sample Rate:</strong> <span id="sampleRate"></span> </li>
+              <li><strong>Bit Rate:</strong> <span id="bitRate"></span> </li>
+              <li><strong>File Size:</strong> <span id="fileSize"></span> </li>
+            </ul>
+          </div>
+        </div>
+        <!-- ----------------------------- Visualization Modes ----------------------------- -->
         <div class="visualization-modes">
           <h3>Visualization Modes</h3>
           <div class="mode-buttons">
@@ -38,115 +154,8 @@
             <button class="mode-button" data-mode="frequency-rings">Frequency Rings</button>
             <button class="mode-button" data-mode="3d-visualization">3D Visualization</button>
           </div>
-          <div class="equalizer-container">
-            <div class="equalizer">
-              <h3>Equalizer</h3>
-              <div class="eq-presets">
-                <label for="preset-select">Presets:</label>
-                <select id="preset-select">
-                  <option value="normal">Normal</option>
-                  <option value="pop">Pop</option>
-                  <option value="classic">Classic</option>
-                  <option value="rock">Rock</option>
-                  <option value="jazz">Jazz</option>
-                </select>
-              </div>
-              <div class="eq-sliders">
-                <div class="eq-slider">
-                  <label for="preamp-slider">Preamp:</label>
-                  <input type="range" id="preamp-slider" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="preamp">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider32">32</label>
-                  <input type="range" id="slider32" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="32">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider64">64</label>
-                  <input type="range" id="slider64" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="64">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider125">125</label>
-                  <input type="range" id="slider125" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="125">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider250">250</label>
-                  <input type="range" id="slider250" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="250">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider500">500</label>
-                  <input type="range" id="slider500" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="500">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider1k">1k</label>
-                  <input type="range" id="slider1k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="1000">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider2k">2k</label>
-                  <input type="range" id="slider2k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="2000">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider4k">4k</label>
-                  <input type="range" id="slider4k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="4000">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider8k">8k</label>
-                  <input type="range" id="slider8k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="8000">
-                </div>
-                <div class="eq-slider">
-                  <label for="slider16k">16k</label>
-                  <input type="range" id="slider16k" min="-12" max="12" value="0" step="0.5" class="eq-slider"
-                    data-frequency="16000">
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <!-- ----------------------------- Left Section ----------------------------- -->
-      <div class="left-section">
-        <input type="file" id="audioFile" accept=".mp3, .wav">
-        <div class="button-group">
-          <button id="prevButton" class="player-button"><i class="fas fa-step-backward"></i></button>
-          <button id="playButton" class="player-button"><i class="fas fa-play"></i></button>
-          <button id="pauseButton" class="player-button"><i class="fas fa-pause"></i></button>
-          <button id="stopButton" class="player-button"><i class="fas fa-stop"></i></button>
-          <button id="nextButton" class="player-button"><i class="fas fa-step-forward"></i></button>
-        </div>
-        <div class="button-texts">
-          <p>Previous</p>
-          <p>Play</p>
-          <p>Pause/Resume</p>
-          <p>Stop</p>
-          <p>Next</p>
-        </div>
-        <div class="audio-controls">
-          <label for="volumeSlider">Volume:</label>
-          <input type="range" id="volumeSlider" min="0" max="2" step="0.1" value="1">
-        </div>
-        <div class="audio-controls">
-          <label for="speedSlider">Speed:</label>
-          <input type="range" id="speedSlider" min="0.25" max="16" step="0.1" value="1">
-        </div>
-        <!-- ----------------------------- Audio Information ----------------------------- -->
-        <div class="audio-info">
-          <h3>Audio Information</h3>
-          <ul>
-            <li><strong>Duration:</strong> <span id="duration"></span> </li>
-            <li><strong>Sample Rate:</strong> <span id="sampleRate"></span> </li>
-            <li><strong>Bit Rate:</strong> <span id="bitRate"></span> </li>
-            <li><strong>File Size:</strong> <span id="fileSize"></span> </li>
-          </ul>
-        </div>
+
       </div>
     </div>
   </div>
@@ -198,8 +207,11 @@
       </div>
     </div>
   </div>
+
+  <!-- ----------------------------- Script ----------------------------- -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="{{ url_for('static', filename='js/bundle.js') }}"></script> <!-- Bundle Script -->
+
 </body>
 
 </html>
