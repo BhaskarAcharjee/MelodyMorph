@@ -32,19 +32,25 @@ git clone https://github.com/BhaskarAcharjee/MelodyMorph.git
 cd MelodyMorph
 ```
 
-3. Install the required dependencies:
+3. Install the required Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Start the Flask development server:
+4. Install the required Node.js development dependencies:
+
+```bash
+npm install
+```
+
+5. Start the Flask development server:
 
 ```bash
 python app.py
 ```
 
-5. Open your web browser and visit `http://localhost:5000` to access MelodyMorph.
+6. Open your web browser and visit `http://localhost:5000` to access MelodyMorph.
 
 ## Usage
 
@@ -52,7 +58,7 @@ python app.py
 2. Click on the "Play" button to start playing the audio and visualize it.
 3. Use the playback control buttons (pause, stop) to control the audio playback.
 4. Adjust the volume and playback speed using the sliders.
-5. Select different visualization modes (waveform, spectrogram, frequency bars) using the mode buttons.
+5. Select different visualization modes (waveform, spectrogram, frequency bars, circle visualization, 3d visualization) using the mode buttons.
 6. Explore the audio visualizations and enjoy!
 
 ## Contributing
