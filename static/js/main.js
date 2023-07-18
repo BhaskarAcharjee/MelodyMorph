@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const stopButton = document.getElementById("stopButton");
   const visualizationCanvas = document.getElementById("visualization");
   const visualization3DCanvas = document.getElementById("visualization3D");
-  const durationElement = document.getElementById("duration");
+  const durationElement = document.getElementById("infoDuration");
   const sampleRateElement = document.getElementById("sampleRate");
   const bitRateElement = document.getElementById("bitRate");
   const fileSizeElement = document.getElementById("fileSize");
@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const volumeSlider = document.getElementById("volumeSlider");
   const presetSelect = document.getElementById("preset-select");
   const eqSliders = document.querySelectorAll(".eq-slider input[type='range']");
+  const modeButtons = document.querySelectorAll(".mode-button");
+  const currentTimeElement = document.getElementById("currentTime");
+  const totalTimeElement = document.getElementById("totalTime");
+  const seekBar = document.getElementById("seekBar");
 
   let audioContext;
   let audioSource;
@@ -34,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let gradient;
   let currentMode = "frequency-bars"; // Default visualization mode
   let isPaused = false;
+  let audioBuffer; // Variable to store the current audio buffer
+  let startTime = 0; // Variable to store the start time of the audio buffer
 
   // Get the visualization canvas size
   visualizationWidth = visualizationCanvas.clientWidth;
@@ -72,10 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
           audioSource.gainNode.connect(analyzerNode);
           analyzerNode.connect(audioContext.destination);
 
+          // Assign the audio buffer to the audioBuffer variable
+          audioBuffer = buffer;
+
+          // Set the start time and reset the seek bar
+          startTime = audioContext.currentTime;
+          seekBar.value = 0;
+
           // Resume the audio context
           audioContext.resume().then(() => {
             // Start playing the audio
-            audioSource.start();
+            audioSource.start(0, seekBar.value);
 
             // Update the visualization
             visualizeAudio(analyzerNode, visualizationCanvas, currentMode);
@@ -88,6 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Apply equalizer effects
             applyEqualizerFilters();
+
+            // Start updating the seek bar and time display again when the audio is resumed
+            requestAnimationFrame(updateSeekBar);
           });
         });
       })
@@ -96,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  // -------------------------------- Visualization ----------------------------------
+  // -------------------------------- Visualization (audioVisualizer.js) ----------------------------------
 
   // Switch the visualization mode
   const switchVisualizationMode = (mode) => {
@@ -116,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Event listeners to the mode buttons
-  const modeButtons = document.querySelectorAll(".mode-button");
   modeButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const mode = button.getAttribute("data-mode");
@@ -196,27 +211,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update Audio information
   const updateAudioInfo = () => {
-    const sampleRate = audioSource.buffer.sampleRate + " kbps";
-    const duration = audioSource.buffer.duration.toFixed(2) + " seconds";
+    const sampleRate = audioBuffer.sampleRate + " kbps";
+    const infoDuration = audioBuffer.duration.toFixed(2) + " seconds";
     const bitRate = calculateBitRate();
     const fileSize = calculateFileSize();
 
     sampleRateElement.textContent = sampleRate;
-    durationElement.textContent = duration;
+    durationElement.textContent = infoDuration;
     bitRateElement.textContent = bitRate;
     fileSizeElement.textContent = fileSize;
   };
 
   // function to calculate the bit rate
   const calculateBitRate = () => {
-    const audioBuffer = audioSource.buffer;
     const bitRate = (audioBuffer.length * 8) / audioBuffer.duration / 1000; // Calculate the bit rate in kilobits per second
     return bitRate.toFixed(2) + " kbps";
   };
 
   // function to calculate the file size
   const calculateFileSize = () => {
-    const audioBuffer = audioSource.buffer;
     const fileSize = audioBuffer.length * audioBuffer.numberOfChannels * 2; // Calculate the file size in bytes
     return formatFileSize(fileSize);
   };
@@ -233,6 +246,75 @@ document.addEventListener("DOMContentLoaded", () => {
       return (bytes / 1073741824).toFixed(2) + " GB";
     }
   };
+
+  //----------------------------------------- Seekbar & Time Display --------------------------------------
+
+  // Event listener for seek bar input
+  seekBar.addEventListener("input", () => {
+    if (audioSource && audioContext.state === "running") {
+      // Pause the current audio source
+      audioSource.stop();
+      audioSource.disconnect();
+
+      // Calculate the new seek time based on the seek bar value
+      const seekTime = (seekBar.value / 100) * audioBuffer.duration;
+
+      // Create a new audio source with the same audio buffer and connect it to the analyzer node
+      audioSource = audioContext.createBufferSource();
+      audioSource.buffer = audioBuffer;
+      audioSource.gainNode = audioContext.createGain();
+      audioSource.connect(audioSource.gainNode);
+      audioSource.gainNode.connect(analyzerNode);
+      analyzerNode.connect(audioContext.destination);
+
+      // Start the new audio source at the desired seek time
+      audioSource.start(0, seekTime);
+
+      // Update the seek bar and time display continuously using requestAnimationFrame
+      startTime = audioContext.currentTime - seekTime;
+      requestAnimationFrame(updateSeekBar);
+    }
+  });
+
+  // Function to update the seek bar and time display
+  const updateSeekBar = () => {
+    if (audioSource && audioContext.state === "running") {
+      // Calculate the current time based on the difference between the current time and the start time
+      const currentTime = audioContext.currentTime - startTime;
+      const totalDuration = audioBuffer.duration;
+
+      currentTimeElement.textContent = formatTime(currentTime);
+      totalTimeElement.textContent = formatTime(totalDuration);
+
+      seekBar.value = (currentTime / totalDuration) * 100;
+
+      if (currentTime < totalDuration) {
+        // If current time is less than total duration, continue updating the seek bar and time display
+        requestAnimationFrame(updateSeekBar);
+      } else {
+        // If current time reaches or exceeds total duration, stop updating the seek bar and time display
+        currentTimeElement.textContent = formatTime(totalDuration);
+        seekBar.value = 100;
+      }
+    } else {
+      // Stop updating the seek bar and time display when the audio is paused or stopped
+      currentTimeElement.textContent = "00:00";
+      totalTimeElement.textContent = "00:00";
+      seekBar.value = 0;
+    }
+  };
+
+  // Helper function to format time in minutes and seconds
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  // Start updating the seek bar and time display
+  updateSeekBar();
 
   // -------------------------------- Media Control ----------------------------------
 
@@ -257,11 +339,14 @@ document.addEventListener("DOMContentLoaded", () => {
   pauseButton.addEventListener("click", () => {
     if (!isPaused) {
       // Pause the audio
-      audioContext.suspend();
-      isPaused = true;
-      if (currentMode === "3d-visualization") {
-        stop3DVisualization(); // Stop the 3D visualization when pausing
-      }
+      audioContext.suspend().then(() => {
+        isPaused = true;
+        if (currentMode === "3d-visualization") {
+          stop3DVisualization(); // Stop the 3D visualization when pausing
+        }
+        // Stop updating the seek bar and time display when the audio is paused
+        cancelAnimationFrame(updateSeekBar);
+      });
     } else {
       // Resume the audio
       audioContext.resume().then(() => {
@@ -269,6 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentMode === "3d-visualization") {
           visualizeAudio(analyzerNode, visualizationCanvas, currentMode); // Resume the 3D visualization when resuming audio
         }
+        // Start updating the seek bar and time display again when the audio is resumed
+        requestAnimationFrame(updateSeekBar);
       });
     }
   });
@@ -279,6 +366,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentMode === "3d-visualization") {
       clear3DVisualizationCanvas(); // Stop the 3D visualization when stopping
     }
+    // Stop updating the seek bar and time display when the audio is paused
+    cancelAnimationFrame(updateSeekBar);
   });
 
   // Update the volume
