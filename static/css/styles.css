@@ -1,3 +1,114 @@
+/* ---------- Custom Color Styles (Vibrant Yellow Light Theme) ----------- */
+
+body {
+  background-color: #ffffe0;
+}
+
+.container {
+  background-color: #fffff0;
+}
+
+h1 {
+  text-shadow: 2px 2px 4px rgba(255, 140, 0, 0.3);
+  color: #333;
+}
+
+.left-section {
+  background-color: #ffe4b5;
+}
+
+.left-section:hover {
+  box-shadow: 0px 8px 16px rgba(255, 140, 0, 0.3);
+}
+
+.right-section {
+  background-color: #ffe4b5;
+}
+
+.right-section:hover {
+  box-shadow: 0px 8px 16px rgba(255, 140, 0, 0.3);
+}
+
+.visualization-modes {
+  background: linear-gradient(135deg, #ffffe0 0%, #ffd700 100%);
+}
+
+.mode-buttons-container::-webkit-scrollbar-thumb {
+  background-color: #ff8c00; 
+}
+
+.mode-button {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+.mode-button:hover {
+  background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+}
+
+.button-texts {
+  color: #000;
+}
+
+input[type="file"] {
+  background: linear-gradient(180deg, #e0e0e0 0%, #f0f0f0 100%);
+}
+
+.audio-mic-container {
+  background: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
+}
+
+.mic-icon {
+  color: #000;
+}
+
+.media-controls {
+  background: linear-gradient(180deg, #fffacd 0%, #ffd700 100%);
+}
+
+.player-button {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+.player-button:hover {
+  background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+}
+
+.audio-info {
+  background: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
+}
+
+.equalizer-container {
+  background: linear-gradient(135deg, #ffffe0 0%, #ffd700 100%);
+}
+
+.equalizer {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+.tab-item {
+  background-color: #fffacd;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+.footer {
+  background-color: #ffd700;
+  color: #000;
+}
+
+.social-links a {
+  color: #fffacd;
+  background-color: #ff8c00;
+}
+
+.social-links a:hover {
+  color: #ffd700;
+  background-color: #fffacd;
+}
+
+/* ---------- Global Styles ----------- */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -10,16 +121,19 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto;
-  background-color: #f1f1f1;
-  padding-bottom: 20px;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 h1 {
   margin: 20px;
   padding: 20px;
   font-size: 40px;
-  color: #333;
+  /* color: #333; */
+}
+
+h1 span {
+  font-size: 50px;
 }
 
 .panel {
@@ -37,7 +151,7 @@ h1 {
   align-items: center;
   padding: 20px;
   margin-right: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -50,7 +164,7 @@ h1 {
   justify-content: center;
   padding: 20px;
   margin-left: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -101,10 +215,226 @@ canvas {
   font-weight: bold;
 }
 
+/* ---------- Visualization Modes ----------- */
+
+.visualization-modes {
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.visualization-modes h3 {
+  margin-top: 10px;
+  padding: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.mode-buttons {
+  margin-top: 10px;
+}
+
+.mode-buttons-container {
+  margin: 20px;
+  height: 200px; /* Adjust the height of scrollable div */
+  overflow-y: auto;
+}
+
+.mode-buttons-container::-webkit-scrollbar {
+  width: 10px; /* Adjust the width of the scrollbar */
+}
+
+.mode-buttons-container::-webkit-scrollbar-thumb {
+  /* background-color: #FFD700; */
+  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+}
+
+.mode-button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  /* background-color: #555; */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* .mode-button:hover {
+  background-color: #333;
+} */
+
+/* ---------- Upload Files ----------- */
+
+input[type="file"] {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  /* color: #555; */
+  /* background-color: #fff; */
+  width: 70%;
+  max-width: 400px;
+}
+
+/* ---------- Left Section Top-Bottom ----------- */
+
+.left-section-top,
+.left-section-bottom {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ---------- Audio Mic ----------- */
+
+.audio-mic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  /* background-color: #fff; */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mic-icon {
+  font-size: 120px;
+  /* color: #333; */
+  cursor: pointer;
+}
+
+/* ---------- Media Controls ----------- */
+
+.media-controls {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  /* background-color: #fff; */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.player-button {
+  width: 56px;
+  height: 56px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 50%;
+  /* background-color: #555; */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .player-button:hover {
+  background-color: #333;
+} */
+
+.player-button i {
+  font-size: 24px;
+}
+
+.button-texts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.button-texts p {
+  margin: 0 15px;
+  font-size: 12px;
+  font-weight: bold;
+  /* color: #555; */
+}
+
+/* ---------- Audio Controls ----------- */
+
+.audio-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.audio-controls label {
+  font-size: 16px;
+  color: #555;
+  margin-right: 10px;
+}
+
+.audio-controls label i {
+  color: #000;
+  font-size: 20px;
+}
+
+.audio-controls input[type="range"] {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ---------- Audio information ----------- */
+
+.audio-info {
+  flex: 1;
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  /* background-color: #fff; */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.audio-info h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.audio-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.audio-info li {
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #555;
+}
+
+.audio-info li strong {
+  font-weight: bold;
+}
+
 /* ---------- Equalizer ----------- */
 
 .equalizer-container {
-  background-color: #fff;
+  /* background-color: #fff; */
   padding: 20px;
   border-radius: 5px;
   display: flex;
@@ -115,10 +445,15 @@ canvas {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.equalizer-container h3 {
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
 .equalizer {
   width: 100%;
   max-width: 700px;
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   padding: 10px;
   border-radius: 5px;
   display: flex;
@@ -155,7 +490,8 @@ canvas {
 .eq-slider label {
   text-align: center;
   font-size: 12px;
-  color: #555;
+  /* color: #000; */
+  font-weight: bold;
 }
 
 .eq-slider input[type="range"] {
@@ -216,179 +552,11 @@ canvas {
   background-color: #999;
 }
 
-/* ---------- Left Section ----------- */
-
-.left-section-top {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* ---------- Upload Files ----------- */
-
-input[type="file"] {
-  margin-bottom: 20px;
-  padding: 15px;
-  border: none;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  font-size: 20px;
-  color: #555;
-  width: 70%;
-  max-width: 400px;
-}
-
-/* ---------- Media Controls ----------- */
-
-.media-controls,
-.audio-info {
-  flex: 1;
-  padding: 10px; /* Add some padding to media-controls and audio-info */
-}
-
-.button-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.player-button {
-  width: 56px;
-  height: 56px;
-  margin: 0 10px;
-  border: none;
-  border-radius: 50%;
-  background-color: #555;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.player-button:hover {
-  background-color: #333;
-}
-
-.player-button i {
-  font-size: 24px;
-}
-
-.button-texts {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 5px;
-  text-align: center;
-}
-
-.button-texts p {
-  margin: 0 15px;
-  font-size: 12px;
-  color: #555;
-}
-
-/* ---------- Audio Controls ----------- */
-
-.audio-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.audio-controls label {
-  font-size: 16px;
-  color: #555;
-  margin-right: 10px;
-}
-
-.audio-controls input[type="range"] {
-  width: 100%;
-  max-width: 300px;
-}
-
-/* ---------- Visualization Modes ----------- */
-
-.visualization-modes {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.visualization-modes h3 {
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  color: #333;
-}
-
-.mode-buttons {
-  margin-top: 10px;
-}
-
-.mode-button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 50px;
-  background-color: #555;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.mode-button:hover {
-  background-color: #333;
-}
-
-/* ---------- Audio information ----------- */
-
-.audio-info {
-  text-align: left;
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.audio-info h3 {
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  color: #333;
-}
-
-.audio-info ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-}
-
-.audio-info li {
-  margin-bottom: 5px;
-  font-size: 16px;
-  color: #555;
-}
-
-.audio-info li strong {
-  font-weight: bold;
-}
-
 /* ---------- Audio Libraries ----------- */
 
 .audio-tabs {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  padding: 20px;
   text-align: center;
 }
 
@@ -404,16 +572,16 @@ input[type="file"] {
   display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
-  color: #555;
+  /* color: #555; */
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 20px;
 }
 
-.tab-item.active {
+/* .tab-item.active {
   background-color: #555;
   color: #fff;
-}
+} */
 
 .audio-list-container {
   text-align: center;
@@ -447,10 +615,10 @@ input[type="file"] {
 
 .audio-item {
   display: block;
-  width: 120px;
+  width: 100%;
   height: 120px;
   border: none;
-  border-radius: 50%;
+  /* border-radius: 10px; */
   background-color: transparent;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -461,7 +629,7 @@ input[type="file"] {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 10px;
 }
 
 .audio-item:focus {
@@ -471,4 +639,48 @@ input[type="file"] {
 
 .audio-item:focus img {
   box-shadow: 0 0 0 2px #555;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  /* background-color: #333; */
+  /* color: #fff; */
+  padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.social-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.social-links li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.social-links a {
+  /* color: #fff; */
+  /* background-color: #555; */
+  font-size: 20px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.social-links a:hover {
+  /* color: #333;
+  background-color: #fff; */
+  transform: scale(1.1);
+  transition: background-color 0.2s, transform 0.2s;
 }

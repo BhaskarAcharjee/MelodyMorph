@@ -71,7 +71,7 @@ Bit rate refers to the number of bits processed or transmitted per unit of time,
 22. Audio Rain: Raindrops that fall and splash based on audio intensity.
 23. Audio Metronome: Metronome-like visuals pulsing to the beat of the music.
 24. Audio Jellyfish: Jellyfish-like creatures floating and pulsating with audio.
-25. Fractal Tree:
-26. Audio Galaxy: 
+25. Fractal Tree: Recursive tree-like patterns synced with audio.
+26. Audio Galaxy: Mesmerizing galaxy visualization with audio sync.
 
 ------------------------------------------------

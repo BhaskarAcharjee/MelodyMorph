@@ -1344,6 +1344,47 @@ const visualizeAudio = (analyzerNode, visualizationCanvas, currentMode) => {
   drawFrame();
 };
 
+// ---------------------- Visualization Modes (Dynamic HTML Manipulation) ----------------------
+
+const visualizationModes = [
+  "Waveform",
+  "Spectrogram",
+  "Frequency Bars",
+  "Circular Visualization",
+  "Time Frequency Heatmap",
+  "Audio Reactive Shapes",
+  "Fractals",
+  "Spectrum Waterfall",
+  "Particle System",
+  "Frequency Rings",
+  "Kaleidoscope",
+  "Glitch Art",
+  "Motion Trails",
+  "VU Meter",
+  "Neon Glow",
+  "Geometric Patterns",
+  "Audio Fireworks",
+  "Spectrum Flowers",
+  "Pixelation",
+  "Audio Tornado",
+  "Audio Rain",
+  "Audio Metronome",
+  "Audio Jellyfish",
+  "Fractal Tree",
+  "Audio Galaxy",
+  "3D Visualization",
+];
+
+const modeButtonsContainer = document.getElementById("modeButtons");
+
+visualizationModes.forEach((mode) => {
+  const button = document.createElement("button");
+  button.classList.add("mode-button");
+  button.setAttribute("data-mode", mode.toLowerCase().replace(/ /g, "-")); // Set data-mode converting visualization modes name to lower case join with '-'
+  button.textContent = mode;
+  modeButtonsContainer.appendChild(button);
+});
+
 // -------------------------------- End ----------------------------------
 
 module.exports = {
