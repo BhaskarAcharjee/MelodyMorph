@@ -1,115 +1,55 @@
-/* ---------- Custom Color Styles (Vibrant Yellow Light Theme) ----------- */
-
-body {
-  background-color: #ffffe0;
-}
-
-.container {
-  background-color: #fffff0;
-}
-
-h1 {
-  text-shadow: 2px 2px 4px rgba(255, 140, 0, 0.3);
-  color: #333;
-}
-
-.left-section {
-  background-color: #ffe4b5;
-}
-
-.left-section:hover {
-  box-shadow: 0px 8px 16px rgba(255, 140, 0, 0.3);
-}
-
-.right-section {
-  background-color: #ffe4b5;
-}
-
-.right-section:hover {
-  box-shadow: 0px 8px 16px rgba(255, 140, 0, 0.3);
-}
-
-.visualization-modes {
-  background: linear-gradient(135deg, #ffffe0 0%, #ffd700 100%);
-}
-
-.mode-buttons-container::-webkit-scrollbar-thumb {
-  background-color: #ff8c00; 
-}
-
-.mode-button {
-  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-}
-
-.mode-button:hover {
-  background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
-}
-
-.button-texts {
-  color: #000;
-}
-
-input[type="file"] {
-  background: linear-gradient(180deg, #e0e0e0 0%, #f0f0f0 100%);
-}
-
-.audio-mic-container {
-  background: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
-}
-
-.mic-icon {
-  color: #000;
-}
-
-.media-controls {
-  background: linear-gradient(180deg, #fffacd 0%, #ffd700 100%);
-}
-
-.player-button {
-  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-}
-
-.player-button:hover {
-  background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
-}
-
-.audio-info {
-  background: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
-}
-
-.equalizer-container {
-  background: linear-gradient(135deg, #ffffe0 0%, #ffd700 100%);
-}
-
-.equalizer {
-  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-}
-
-.tab-item {
-  background-color: #fffacd;
-}
-
-.tab-item.active {
-  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
-}
-
-.footer {
-  background-color: #ffd700;
-  color: #000;
-}
-
-.social-links a {
-  color: #fffacd;
-  background-color: #ff8c00;
-}
-
-.social-links a:hover {
-  color: #ffd700;
-  background-color: #fffacd;
+/* Custom Color Variables (Vibrant Yellow Light Theme) */
+:root {
+  --col_bg_body: #ffffe0;
+  --col_bg_container: #fffff0;
+  --col_text_h1_shadow: rgba(255, 140, 0, 0.3);
+  --col_text_h1: #333;
+  --col_bg_left_section: #ffe4b5;
+  --col_box_shadow_left_section_hover: rgba(255, 140, 0, 0.3);
+  --col_bg_right_section: #ffe4b5;
+  --col_box_shadow_right_section_hover: rgba(255, 140, 0, 0.3);
+  --col_bg_visualization_modes: linear-gradient(
+    135deg,
+    #ffffe0 0%,
+    #ffd700 100%
+  );
+  --col_scrollbar_thumb_mode_buttons: #ff8c00;
+  --col_bg_mode_button: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  --col_bg_mode_button_hover: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+  --col_text_button_texts: #000;
+  --col_bg_input_file: linear-gradient(180deg, #e0e0e0 0%, #f0f0f0 100%);
+  --col_bg_audio_mic: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
+  --col_text_mic_icon: #000;
+  --col_text_mic_icon_hover: #ff4500;
+  --col_bg_media_controls: linear-gradient(180deg, #fffacd 0%, #ffd700 100%);
+  --col_bg_player_button: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  --col_bg_player_button_hover: linear-gradient(
+    135deg,
+    #ff8c00 0%,
+    #ff4500 100%
+  );
+  --col_bg_audio_info: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
+  --col_bg_equalizer_container: linear-gradient(
+    135deg,
+    #ffffe0 0%,
+    #ffd700 100%
+  );
+  --col_bg_equalizer: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  --col_bg_preset-select: #ffd700;
+  --col_bg_lyrics_box: linear-gradient(180deg, #ffffe0 0%, #ffd700 100%);
+  --col_bg_tab_item: #fffacd;
+  --col_bg_tab_item_active: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  --col_bg_footer: #ffd700;
+  --col_text_footer: #000;
+  --col_text_social_links: #fffacd;
+  --col_bg_social_links: #ff8c00;
+  --col_text_social_links_hover: #ff4500;
+  --col_bg_social_links_hover: #fffacd;
 }
 
 /* ---------- Global Styles ----------- */
 body {
+  background-color: var(--col_bg_body);
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
@@ -117,10 +57,11 @@ body {
 }
 
 .container {
+  background-color: var(--col_bg_container);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
   padding: 20px;
 }
@@ -129,7 +70,8 @@ h1 {
   margin: 20px;
   padding: 20px;
   font-size: 40px;
-  /* color: #333; */
+  text-shadow: 2px 2px 4px var(--col_text_h1_shadow);
+  color: var(--col_text_h1);
 }
 
 h1 span {
@@ -151,9 +93,13 @@ h1 span {
   align-items: center;
   padding: 20px;
   margin-right: 10px;
-  /* background-color: #fff; */
+  background-color: var(--col_bg_left_section);
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.left-section:hover {
+  box-shadow: 0px 8px 16px var(--col_box_shadow_left_section_hover);
 }
 
 .right-section {
@@ -164,9 +110,13 @@ h1 span {
   justify-content: center;
   padding: 20px;
   margin-left: 10px;
-  /* background-color: #fff; */
+  background-color: var(--col_bg_right_section);
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right-section:hover {
+  box-shadow: 0px 8px 16px var(--col_box_shadow_right_section_hover);
 }
 
 /* ---------- Canvas ----------- */
@@ -201,7 +151,7 @@ canvas {
 }
 
 #seekBar {
-  width: 600px;
+  width: 550px;
 }
 
 .seek-bar-time {
@@ -218,6 +168,7 @@ canvas {
 /* ---------- Visualization Modes ----------- */
 
 .visualization-modes {
+  background: var(--col_bg_visualization_modes);
   margin-top: 20px;
   text-align: center;
   border-radius: 10px;
@@ -244,8 +195,13 @@ canvas {
   width: 10px; /* Adjust the width of the scrollbar */
 }
 
+.mode-buttons-container::-webkit-scrollbar-track {
+  background-color: #ddd; /* Set the background color of the scrollbar track */
+  border-radius: 10px;
+}
+
 .mode-buttons-container::-webkit-scrollbar-thumb {
-  /* background-color: #FFD700; */
+  background-color: var(--col_scrollbar_thumb_mode_buttons);
   border-radius: 5px; /* Rounded corners for the scrollbar thumb */
 }
 
@@ -255,15 +211,15 @@ canvas {
   font-size: 16px;
   border: none;
   border-radius: 50px;
-  /* background-color: #555; */
+  background: var(--col_bg_mode_button);
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-/* .mode-button:hover {
-  background-color: #333;
-} */
+.mode-button:hover {
+  background: var(--col_bg_mode_button_hover);
+}
 
 /* ---------- Upload Files ----------- */
 
@@ -274,8 +230,7 @@ input[type="file"] {
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 20px;
-  /* color: #555; */
-  /* background-color: #fff; */
+  background: var(--col_bg_input_file);
   width: 70%;
   max-width: 400px;
 }
@@ -299,17 +254,22 @@ input[type="file"] {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  height: 150px;
+  height: 100%;
+  max-height: 150px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  /* background-color: #fff; */
+  background: var(--col_bg_audio_mic);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mic-icon {
   font-size: 120px;
-  /* color: #333; */
+  color: var(--col_text_mic_icon);
   cursor: pointer;
+}
+
+.mic-icon:hover {
+  color: var(--col_text_mic_icon_hover);
 }
 
 /* ---------- Media Controls ----------- */
@@ -319,7 +279,7 @@ input[type="file"] {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  /* background-color: #fff; */
+  background: var(--col_bg_media_controls);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -337,7 +297,7 @@ input[type="file"] {
   margin: 0 10px;
   border: none;
   border-radius: 50%;
-  /* background-color: #555; */
+  background: var(--col_bg_player_button);
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -346,9 +306,9 @@ input[type="file"] {
   justify-content: center;
 }
 
-/* .player-button:hover {
-  background-color: #333;
-} */
+.player-button:hover {
+  background: var(--col_bg_player_button_hover);
+}
 
 .player-button i {
   font-size: 24px;
@@ -361,13 +321,13 @@ input[type="file"] {
   flex-wrap: wrap;
   margin-top: 5px;
   text-align: center;
+  color: var(--col_text_button_texts);
 }
 
 .button-texts p {
   margin: 0 15px;
   font-size: 12px;
   font-weight: bold;
-  /* color: #555; */
 }
 
 /* ---------- Audio Controls ----------- */
@@ -404,8 +364,10 @@ input[type="file"] {
   padding: 20px;
   margin-top: 20px;
   border-radius: 10px;
-  /* background-color: #fff; */
+  background: var(--col_bg_audio_info);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  max-height: 250px;
 }
 
 .audio-info h3 {
@@ -434,7 +396,7 @@ input[type="file"] {
 /* ---------- Equalizer ----------- */
 
 .equalizer-container {
-  /* background-color: #fff; */
+  background: var(--col_bg_equalizer_container);
   padding: 20px;
   border-radius: 5px;
   display: flex;
@@ -443,6 +405,8 @@ input[type="file"] {
   justify-content: center; /* Align items in the center vertically */
   margin-top: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  max-height: 250px;
 }
 
 .equalizer-container h3 {
@@ -453,7 +417,7 @@ input[type="file"] {
 .equalizer {
   width: 100%;
   max-width: 700px;
-  /* background-color: #f2f2f2; */
+  background: var(--col_bg_equalizer);
   padding: 10px;
   border-radius: 5px;
   display: flex;
@@ -465,6 +429,10 @@ input[type="file"] {
 .eq-presets {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+#preset-select {
+  background-color: var(--col_bg_preset-select);
 }
 
 .eq-sliders {
@@ -552,6 +520,57 @@ input[type="file"] {
   background-color: #999;
 }
 
+/* ---------- Lyrics Box ----------- */
+
+.lyrics-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(255, 140, 0, 0.3);
+  height: 100%;
+  max-height: 80px;
+  background: var(--col_bg_lyrics_box);
+}
+
+.lyrics-box h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  color: #333;
+  margin-top: -10px;
+}
+
+.lyrics-content {
+  flex: 1;
+  margin-top: 5px;
+  overflow-y: auto; /* Enable vertical scrollbar if the lyrics overflow */
+}
+
+.lyrics-content::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}
+
+.lyrics-content::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #ddd; /* Set the background color of the scrollbar track */
+}
+
+.lyrics-content::-webkit-scrollbar-thumb {
+  background-color: #ff8c00; /* Set the color of the scrollbar thumb (the moving part) */
+  border-radius: 10px; /* Set the border radius of the scrollbar thumb */
+}
+
+.lyrics-content p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
 /* ---------- Audio Libraries ----------- */
 
 .audio-tabs {
@@ -572,16 +591,15 @@ input[type="file"] {
   display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
-  /* color: #555; */
+  background-color: var(--col_bg_tab_item);
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 20px;
 }
 
-/* .tab-item.active {
-  background-color: #555;
-  color: #fff;
-} */
+.tab-item.active {
+  background: var(--col_bg_tab_item_active);
+}
 
 .audio-list-container {
   text-align: center;
@@ -604,7 +622,7 @@ input[type="file"] {
 .audio-tabs h3 {
   margin: 0;
   padding: 0;
-  font-size: 20px;
+  font-size: 24px;
   color: #333;
 }
 
@@ -644,8 +662,8 @@ input[type="file"] {
 /* ---------- Footer ---------- */
 
 .footer {
-  /* background-color: #333; */
-  /* color: #fff; */
+  background-color: var(--col_bg_footer);
+  color: var(--col_text_footer);
   padding: 20px;
   text-align: center;
   margin-top: 50px;
@@ -670,8 +688,8 @@ input[type="file"] {
 }
 
 .social-links a {
-  /* color: #fff; */
-  /* background-color: #555; */
+  color: var(--col_text_social_links);
+  background-color: var(--col_bg_social_links);
   font-size: 20px;
   text-decoration: none;
   padding: 10px;
@@ -679,8 +697,32 @@ input[type="file"] {
 }
 
 .social-links a:hover {
-  /* color: #333;
-  background-color: #fff; */
+  color: var(--col_text_social_links_hover);
+  background-color: var(--col_bg_social_links_hover);
   transform: scale(1.1);
   transition: background-color 0.2s, transform 0.2s;
+}
+
+/* ---------- Media Quries (Responsivenes) ---------- */
+
+@media only screen and (max-width: 1200px) {
+  .audio-info {
+    max-height: 250px;
+  }
+  .lyrics-box {
+    max-height: 250px;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+  .audio-info {
+    flex: 1;
+    max-height: 130px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .lyrics-content {
+    font-size: 10px;
+  }
 }
