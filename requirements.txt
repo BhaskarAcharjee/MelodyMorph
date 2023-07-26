@@ -1,3 +1,4 @@
 Flask==2.3.2
 librosa==0.10.0.post2
 matplotlib==3.7.2
+gunicorn==20.1.0

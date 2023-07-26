@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
-import io
+import io, os
 import base64
 
 app = Flask(__name__)
@@ -53,4 +53,4 @@ def upload():
     return jsonify({'image': base64_img})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)

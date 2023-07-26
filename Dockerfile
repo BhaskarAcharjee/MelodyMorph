@@ -13,4 +13,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY --from=build-stage /app /app
 EXPOSE 5000
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+
+# Start Gunicorn with your Flask app
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]
