@@ -53,4 +53,7 @@ def upload():
     return jsonify({'image': base64_img})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Get the port number from the PORT environment variable if available
+    port = int(os.environ.get('PORT', 5000))
+    # Start the Gunicorn server
+    app.run(host='0.0.0.0', port=port)
