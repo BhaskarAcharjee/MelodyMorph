@@ -14,12 +14,12 @@ MelodyMorph is a web-based audio visualizer built with Python Flask. It allows y
 
 ## Preview
 
-![melodymorph_screenshot1](https://github.com/BhaskarAcharjee/MelodyMorph/assets/76872572/5ee5789b-a945-4e75-99a6-9363a2615a0f)
+![melodymorph_screenshot1](https://github.com/BhaskarAcharjee/MelodyMorph/assets/76872572/b254a208-df09-450f-88c7-566bd1d93f4d)
 ![melodymorph_screenshot2](https://github.com/BhaskarAcharjee/MelodyMorph/assets/76872572/d453ac6e-063b-4ad9-8c02-2a31bd730b98)
 
 ## Prerequisites
 
-- Python 3.x
+- Python 3.10
 - Flask
 - Web browser with Web Audio API support
 
