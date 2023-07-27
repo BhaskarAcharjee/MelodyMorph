@@ -1439,6 +1439,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let startTime = 0; // Variable to store the start time of the audio buffer
   let mediaRecorder;
   let recordedChunks = [];
+  let isRecording = false;
 
   // Get the visualization canvas size
   visualizationWidth = visualizationCanvas.clientWidth;
@@ -1564,36 +1565,48 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         mediaRecorder.start();
+
+        isRecording = true;
+        toggleMicIcon();
       })
       .catch((error) => {
         console.error("Error accessing the microphone:", error);
       });
   };
 
-  // Function to stop recording (pressing stop button)
+  // Function to stop recording (pressing stop button & again clicking mic icon)
   const stopRecording = () => {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
       mediaRecorder.stop();
       // Show a message indicating recording has stopped
       console.log("Recording Stopped.");
+
+      isRecording = false;
+      toggleMicIcon();
     }
   };
 
   // Event listener for the microphone icon (start recording)
   recordButton.addEventListener("click", () => {
-    startRecording();
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
   });
 
-  // // Function to toggle the audio mic icon
-  // const toggleMicIcon = () => {
-  //   if (isRecording) {
-  //     recordButton.classList.remove("fa-microphone-lines");
-  //     recordButton.classList.add("fa-microphone-lines-slash");
-  //   } else {
-  //     recordButton.classList.remove("fa-microphone-lines-slash");
-  //     recordButton.classList.add("fa-microphone-lines");
-  //   }
-  // };
+  // Function to toggle the audio mic icon
+  const toggleMicIcon = () => {
+    if (!isRecording) {
+      recordButton.classList.remove("fa-microphone");
+      recordButton.classList.add("fa-microphone-slash");
+      recordButton.classList.remove("recording");
+    } else {
+      recordButton.classList.remove("fa-microphone-slash");
+      recordButton.classList.add("fa-microphone");
+      recordButton.classList.add("recording");
+    }
+  };
 
   // -------------------------------- Equalizer ----------------------------------
 

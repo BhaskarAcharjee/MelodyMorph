@@ -250,6 +250,8 @@ input[type="file"] {
 /* ---------- Audio Mic ----------- */
 
 .audio-mic-container {
+  flex: 1;
+  max-width: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -270,6 +272,23 @@ input[type="file"] {
 
 .mic-icon:hover {
   color: var(--col_text_mic_icon_hover);
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* microphone icon when recording */
+.recording {
+  animation: blink 0.8s infinite;
 }
 
 /* ---------- Media Controls ----------- */
