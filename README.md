@@ -1,6 +1,6 @@
 # MelodyMorph - Transforming Music into Visual Symphony
 
-MelodyMorph is a web-based audio visualizer built with Python Flask. It allows you to upload audio files and visualize the audio data in real-time using various visualization modes.
+MelodyMorph is a web-based audio visualizer built with Python Flask and Gunicorn. It allows you to upload audio files and visualize the audio data in real-time using various visualization modes.
 
 **Note: This project is currently in the development phase.**
 
@@ -12,6 +12,11 @@ MelodyMorph is a web-based audio visualizer built with Python Flask. It allows y
 - Playback control (play, pause, stop)
 - Volume and playback speed adjustment
 
+## Deployment
+
+The live deployment of MelodyMorph can be accessed at [https://melodymorph-production.up.railway.app/](https://melodymorph-production.up.railway.app/).
+
+
 ## Preview
 
 ![melodymorph_screenshot1](https://github.com/BhaskarAcharjee/MelodyMorph/assets/76872572/b254a208-df09-450f-88c7-566bd1d93f4d)
@@ -21,6 +26,7 @@ MelodyMorph is a web-based audio visualizer built with Python Flask. It allows y
 
 - Python 3.10
 - Flask
+- Gunicorn
 - Web browser with Web Audio API support
 
 ## Getting Started
@@ -49,13 +55,25 @@ pip install -r requirements.txt
 npm install
 ```
 
-5. Start the Flask development server:
+5. Build the JavaScript bundle:
 
 ```bash
-python app.py
+npm run bundle
 ```
 
-6. Open your web browser and visit `http://localhost:5000` to access MelodyMorph.
+6. Build the Docker image:
+
+```bash
+docker build -t melody-morph .
+```
+
+7. Run the Docker container:
+
+```bash
+docker run -p 5000:5000 melody-morph
+```
+
+8. Open your web browser and visit `http://localhost:5000` to access MelodyMorph.
 
 ## Usage
 
