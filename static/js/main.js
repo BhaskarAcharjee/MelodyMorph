@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentTimeElement = document.getElementById("currentTime");
   const totalTimeElement = document.getElementById("totalTime");
   const seekBar = document.getElementById("seekBar");
+  const recordButton = document.getElementById("recordButton");
 
   let audioContext;
   let audioSource;
@@ -40,6 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPaused = false;
   let audioBuffer; // Variable to store the current audio buffer
   let startTime = 0; // Variable to store the start time of the audio buffer
+  let mediaRecorder;
+  let recordedChunks = [];
 
   // Get the visualization canvas size
   visualizationWidth = visualizationCanvas.clientWidth;
@@ -138,6 +141,63 @@ document.addEventListener("DOMContentLoaded", () => {
       switchVisualizationMode(mode);
     });
   });
+
+  // -------------------------------- Recorded Audio Visualization ----------------------------------
+
+  // Function to start recording
+  const startRecording = () => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        // Show a message indicating recording has started
+        console.log("Recording Started...");
+
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordedChunks, { type: "audio/wav" });
+          const audioPath = URL.createObjectURL(blob);
+          recordedChunks = [];
+          loadAudioFile(audioPath);
+        };
+
+        mediaRecorder.start();
+      })
+      .catch((error) => {
+        console.error("Error accessing the microphone:", error);
+      });
+  };
+
+  // Function to stop recording (pressing stop button)
+  const stopRecording = () => {
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+      mediaRecorder.stop();
+      // Show a message indicating recording has stopped
+      console.log("Recording Stopped.");
+    }
+  };
+
+  // Event listener for the microphone icon (start recording)
+  recordButton.addEventListener("click", () => {
+    startRecording();
+  });
+
+  // // Function to toggle the audio mic icon
+  // const toggleMicIcon = () => {
+  //   if (isRecording) {
+  //     recordButton.classList.remove("fa-microphone-lines");
+  //     recordButton.classList.add("fa-microphone-lines-slash");
+  //   } else {
+  //     recordButton.classList.remove("fa-microphone-lines-slash");
+  //     recordButton.classList.add("fa-microphone-lines");
+  //   }
+  // };
 
   // -------------------------------- Equalizer ----------------------------------
 
@@ -362,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   stopButton.addEventListener("click", () => {
     stopAudio();
+    stopRecording();
     updatePlaybackSpeed(); // Update the playback speed when stopping playback
     if (currentMode === "3d-visualization") {
       clear3DVisualizationCanvas(); // Stop the 3D visualization when stopping

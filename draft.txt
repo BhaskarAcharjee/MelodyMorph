@@ -85,3 +85,9 @@ Bit rate refers to the number of bits processed or transmitted per unit of time,
 
 docker build -t melody-morph .
 docker run -d -p 8000:5000 melody-morph
+docker system prune
+
+--------------------- NPM Command ----------------------
+
+npm run bundle
+npm run watch
