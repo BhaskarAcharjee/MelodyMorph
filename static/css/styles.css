@@ -68,15 +68,21 @@ body {
 
 h1 {
   margin: 20px;
-  padding: 20px;
-  font-size: 40px;
+  /* padding: 20px; */
+  font-size: 34px;
   text-shadow: 2px 2px 4px var(--col_text_h1_shadow);
   color: var(--col_text_h1);
 }
 
-h1 span {
-  font-size: 50px;
+.logo {
+  width: 60px; 
+  height: auto; /* Maintains aspect ratio */
 }
+
+
+/* h1 span {
+  font-size: 50px;
+} */
 
 .panel {
   display: flex;
@@ -117,6 +123,30 @@ h1 span {
 
 .right-section:hover {
   box-shadow: 0px 8px 16px var(--col_box_shadow_right_section_hover);
+}
+
+/* Style for the header */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--col_bg_tab_item);
+  color: white;
+}
+
+body::-webkit-scrollbar {
+  width: 10px; /* width of the scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  /* border-radius: 10px; */
+  background-color: transparent; /* background color of the scrollbar track */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ff8c00; /* color of the scrollbar thumb (the moving part) */
+  border-radius: 10px; /* border radius of the scrollbar thumb */
 }
 
 /* ---------- Canvas ----------- */
@@ -187,16 +217,16 @@ canvas {
 
 .mode-buttons-container {
   margin: 20px;
-  height: 200px; /* Adjust the height of scrollable div */
+  height: 200px; /* height of scrollable div */
   overflow-y: auto;
 }
 
 .mode-buttons-container::-webkit-scrollbar {
-  width: 10px; /* Adjust the width of the scrollbar */
+  width: 10px; /* width of the scrollbar */
 }
 
 .mode-buttons-container::-webkit-scrollbar-track {
-  background-color: #ddd; /* Set the background color of the scrollbar track */
+  background-color: #ddd; /* background color of the scrollbar track */
   border-radius: 10px;
 }
 
@@ -419,7 +449,7 @@ input[type="file"] {
   padding: 20px;
   border-radius: 5px;
   display: flex;
-  flex-direction: column; /* Set the flex-direction to column */
+  flex-direction: column; /* flex-direction to column */
   align-items: center; /* Align items in the center horizontally */
   justify-content: center; /* Align items in the center vertically */
   margin-top: 20px;
@@ -571,17 +601,17 @@ input[type="file"] {
 }
 
 .lyrics-content::-webkit-scrollbar {
-  width: 10px; /* Set the width of the scrollbar */
+  width: 10px; /* width of the scrollbar */
 }
 
 .lyrics-content::-webkit-scrollbar-track {
   border-radius: 10px;
-  background-color: #ddd; /* Set the background color of the scrollbar track */
+  background-color: #ddd; /* background color of the scrollbar track */
 }
 
 .lyrics-content::-webkit-scrollbar-thumb {
-  background-color: #ff8c00; /* Set the color of the scrollbar thumb (the moving part) */
-  border-radius: 10px; /* Set the border radius of the scrollbar thumb */
+  background-color: #ff8c00; /* color of the scrollbar thumb (the moving part) */
+  border-radius: 10px; /* border radius of the scrollbar thumb */
 }
 
 .lyrics-content p {
